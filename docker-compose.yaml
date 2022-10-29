@@ -1,0 +1,34 @@
+version: '3'
+services:
+  db:    
+    build: ./MariaDB/
+    container_name: db   
+    environment:
+      MYSQL_ROOT_PASSWORD: cantinflas
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: pepe
+      MYSQL_PASSWORD: cantinflas
+    ports:
+      - "3306:3306"
+    volumes: 
+        - "./db_vol:/var/lib/mysql"
+        - "./log/db:/var/log"        
+
+  phpmyadmin:    
+    image: phpmyadmin 
+    container_name: phpmyadmin   
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_ARBITRAY=1
+
+  web:      
+      build: .
+      container_name: php
+      ports:
+      - "80:80"
+      tty: true
+      volumes: 
+        - "../My_App:/var/www"
+        - "./log/apache:/var/log/apache2"
+        - "./log/php:/srv/var/log"      
