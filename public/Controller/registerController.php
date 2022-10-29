@@ -12,14 +12,14 @@
 		$action = $_GET['action'];
 	}
 	else {
-		$action = "home";
+		$action = "register";
 	}
 
 	$action = strtolower($action);
 
 	switch($action) {
-		case "home":						
-			include("view/main_view.php");		
+		case "register":						
+			include(SITE_ROOT . "/view/register_view.php");		
 
 			break;			
 	}

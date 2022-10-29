@@ -38,6 +38,7 @@ INSERT INTO `user` (`use_name`, `password`, `email`, `id_role`) VALUES ('admin',
 ```
 ## Creación página de registro
 1. Crear vista de registro
+2. Crear controlador para registro
 
 
 

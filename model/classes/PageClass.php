@@ -8,7 +8,7 @@
 		public $meta_name_keywords = "Aquí van palabras clave para los buscadores";
 		public $menus = array (
 			"Home |"			=>	"/",
-			"Registration |"	=> 	"/",
+			"Registration |"	=> 	"/Controller/registerController.php",
 			"Login |"			=> 	"/",			
 		);
 
