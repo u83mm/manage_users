@@ -23,20 +23,28 @@
 			$password = $_REQUEST['password'] ?? "";
 			$email = $_REQUEST['email'] ?? "";
 
-			if (!empty($user_name) && !empty($password) && !empty($email)) {
-				$query = "INSERT INTO user (user_name, password, email) VALUES (:name, :password, :email)";                 
-
-				$stm = $dbcon->pdo->prepare($query); 
-				$stm->bindValue(":name", $user_name);
-				$stm->bindValue(":password", $password);
-				$stm->bindValue(":email", $email);              
-				$stm->execute();       				
-				$stm->closeCursor();
-				$dbcon = null;
-
-				echo "El usuario se ha registrado correctamente";
+			try {
+				if (!empty($user_name) && !empty($password) && !empty($email)) {
+					$query = "INSERT INTO user (user_name, password, email) VALUES (:name, :password, :email)";                 
+	
+					$stm = $dbcon->pdo->prepare($query); 
+					$stm->bindValue(":name", $user_name);
+					$stm->bindValue(":password", password_hash($password, PASSWORD_DEFAULT));
+					$stm->bindValue(":email", $email);              
+					$stm->execute();       				
+					$stm->closeCursor();
+					$dbcon = null;
+	
+					$success_msg = "<p>El usuario se ha registrado correctamente</p>";
+					include(SITE_ROOT . "/view/database_error.php");
+					exit();
+				}
+			} catch (\Throwable $th) {			
+				$error_msg = "<p>Hay problemas al conectar con la base de datos, revise la configuración 
+						de acceso.</p><p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
+				include(SITE_ROOT . "/view/database_error.php");
 				exit();
-			}
+			}			
 								
 			include(SITE_ROOT . "/view/register_view.php");		
 
