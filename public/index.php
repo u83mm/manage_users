@@ -21,6 +21,6 @@
 		case "home":						
 			include("view/main_view.php");		
 
-			break;			
+			break;					
 	}
 ?>

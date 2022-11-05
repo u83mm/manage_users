@@ -18,7 +18,26 @@
 	$action = strtolower($action);
 
 	switch($action) {
-		case "register":						
+		case "register":
+			$user_name = $_REQUEST['user_name'] ?? "";
+			$password = $_REQUEST['password'] ?? "";
+			$email = $_REQUEST['email'] ?? "";
+
+			if (!empty($user_name) && !empty($password) && !empty($email)) {
+				$query = "INSERT INTO user (user_name, password, email) VALUES (:name, :password, :email)";                 
+
+				$stm = $dbcon->pdo->prepare($query); 
+				$stm->bindValue(":name", $user_name);
+				$stm->bindValue(":password", $password);
+				$stm->bindValue(":email", $email);              
+				$stm->execute();       				
+				$stm->closeCursor();
+				$dbcon = null;
+
+				echo "El usuario se ha registrado correctamente";
+				exit();
+			}
+								
 			include(SITE_ROOT . "/view/register_view.php");		
 
 			break;			

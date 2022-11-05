@@ -3,7 +3,7 @@
 
 	class PageClass {
 		public $title = "Aquí va el title";
-		public $h1 = "Aquí va el h1";
+		public $h1 = "Desarrollo de nuestra aplicación";
 		public $meta_name_description = "Aquí va una descripción del sitio";
 		public $meta_name_keywords = "Aquí van palabras clave para los buscadores";
 		public $menus = array (

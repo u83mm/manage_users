@@ -1,6 +1,4 @@
-<?php
-	//require_once ('aplication_fns.php');
-	
+<?php		
 	model\classes\Loader::init(__DIR__ . "/..");
 	
 	use Application\Database\Connection;

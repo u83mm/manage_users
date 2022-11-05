@@ -34,11 +34,24 @@
   ```
 ### 3. Introducimos un usuario
 ```
-INSERT INTO `user` (`use_name`, `password`, `email`, `id_role`) VALUES ('admin', 'admin', 'admin@admin.com', 1);
+INSERT INTO `user` (`user_name`, `password`, `email`, `id_role`) VALUES ('admin', 'admin', 'admin@admin.com', 1);
 ```
 ## Creación página de registro
 1. Crear vista de registro
 2. Crear controlador para registro
+3. Registro de nuestro primer usuario
+```
+$query = "INSERT INTO user (user_name, password, email) VALUES (:name, :password, :email)";                 
+
+$stm = $dbcon->pdo->prepare($query); 
+$stm->bindValue(":name", $name);
+$stm->bindValue(":password", $password);
+$stm->bindValue(":email", $email);              
+$stm->execute();       				
+$stm->closeCursor();
+$dbcon = null;
+```
+
 
 
 
