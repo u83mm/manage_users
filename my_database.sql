@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 26-10-2022 a las 20:35:23
+-- Tiempo de generación: 07-11-2022 a las 23:53:43
 -- Versión del servidor: 10.8.3-MariaDB-1:10.8.3+maria~jammy
 -- Versión de PHP: 8.0.22
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `roles` (
-  `id_role` int(11) NOT NULL,
+  `id_roles` int(11) NOT NULL,
   `role` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -36,7 +36,7 @@ CREATE TABLE `roles` (
 -- Volcado de datos para la tabla `roles`
 --
 
-INSERT INTO `roles` (`id_role`, `role`) VALUES
+INSERT INTO `roles` (`id_roles`, `role`) VALUES
 (1, 'ROLE_ADMIN'),
 (2, 'ROLE_USER');
 
@@ -48,11 +48,20 @@ INSERT INTO `roles` (`id_role`, `role`) VALUES
 
 CREATE TABLE `user` (
   `id_user` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(250) NOT NULL,
-  `email` varchar(250) NOT NULL,
-  `id_role` int(11) DEFAULT NULL
+  `user_name` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `id_role` int(11) NOT NULL DEFAULT 2
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `user`
+--
+
+INSERT INTO `user` (`id_user`, `user_name`, `password`, `email`, `id_role`) VALUES
+(1, 'admin', 'asdasd', 'prueba@prueba.com', 2),
+(2, 'admin', '$2y$10$a0dTNHS3oC3fOYjU/5NmbuRoNjErDdURkxf8kGQEovGcTp89R.V9.', 'pepe@pepe.com', 2),
+(6, 'admin', '$2y$10$CkY/jX7x7SIt8Jht9Er4BOwewMhvdz2/kxWl9VNoGPfpHRIovGata', 'admin@admin.com', 2);
 
 --
 -- Índices para tablas volcadas
@@ -62,13 +71,14 @@ CREATE TABLE `user` (
 -- Indices de la tabla `roles`
 --
 ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id_role`);
+  ADD PRIMARY KEY (`id_roles`);
 
 --
 -- Indices de la tabla `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `fk_user_role` (`id_role`);
 
 --
@@ -79,13 +89,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_roles` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
@@ -95,7 +105,7 @@ ALTER TABLE `user`
 -- Filtros para la tabla `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `fk_user_role` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id_role`);
+  ADD CONSTRAINT `fk_user_role` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id_roles`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

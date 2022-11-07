@@ -8,6 +8,7 @@
 ?>
 	<h4>Vista de Registro</h4>
     <div class="col-6 mx-auto">
+        <?php echo $message = $error_msg ?? $success_msg ?? ""; ?>
         <form action="#" method="post">
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="user_name">User:</label>

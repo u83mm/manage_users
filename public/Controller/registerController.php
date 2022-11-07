@@ -25,28 +25,42 @@
 
 			try {
 				if (!empty($user_name) && !empty($password) && !empty($email)) {
-					$query = "INSERT INTO user (user_name, password, email) VALUES (:name, :password, :email)";                 
-	
-					$stm = $dbcon->pdo->prepare($query); 
-					$stm->bindValue(":name", $user_name);
-					$stm->bindValue(":password", password_hash($password, PASSWORD_DEFAULT));
-					$stm->bindValue(":email", $email);              
-					$stm->execute();       				
+					$query = "SELECT * FROM user WHERE email = :val";                         
+
+					$stm = $dbcon->pdo->prepare($query);
+					$stm->bindValue(":val", $email);                            
+					$stm->execute();       
+					$rows = $stm->fetch();
 					$stm->closeCursor();
-					$dbcon = null;
+
+					if ($rows) {
+						$error_msg = "<p class='error'>El email '{$email}' ya está registrado</p>";
+						include(SITE_ROOT . "/view/register_view.php");											
+					}
+					else {
+						$query = "INSERT INTO user (user_name, password, email) VALUES (:name, :password, :email)";                 
 	
-					$success_msg = "<p>El usuario se ha registrado correctamente</p>";
-					include(SITE_ROOT . "/view/database_error.php");
-					exit();
+						$stm = $dbcon->pdo->prepare($query); 
+						$stm->bindValue(":name", $user_name);
+						$stm->bindValue(":password", password_hash($password, PASSWORD_DEFAULT));
+						$stm->bindValue(":email", $email);              
+						$stm->execute();       				
+						$stm->closeCursor();
+						$dbcon = null;
+		
+						$success_msg = "<p>El usuario se ha registrado correctamente</p>";
+						include(SITE_ROOT . "/view/database_error.php");
+					}										
+				}
+				else {
+					include(SITE_ROOT . "/view/register_view.php");	
 				}
 			} catch (\Throwable $th) {			
 				$error_msg = "<p>Hay problemas al conectar con la base de datos, revise la configuración 
 						de acceso.</p><p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
 				include(SITE_ROOT . "/view/database_error.php");
 				exit();
-			}			
-								
-			include(SITE_ROOT . "/view/register_view.php");		
+			}															
 
 			break;			
 	}
