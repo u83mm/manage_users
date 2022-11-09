@@ -9,6 +9,7 @@
 		public $menus = array (
 			"Home |"			=>	"/",
 			"Registration |"	=> 	"/Controller/registerController.php",
+			"Administration |"	=>	"/Controller/adminController.php",
 			"Login |"			=> 	"/",			
 		);
 
