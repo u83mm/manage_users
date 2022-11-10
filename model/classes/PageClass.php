@@ -1,4 +1,6 @@
 <?php
+	declare(strict_types=1);
+	
 	namespace model\classes;
 
 	class PageClass {
@@ -13,18 +15,18 @@
 			"Login |"			=> 	"/",			
 		);
 
-		public function do_html_header($title, $h1, $meta_name_description, $meta_name_keywords) {
+		public function do_html_header(string $title, string $h1, string $meta_name_description, string $meta_name_keywords) {
 ?>
 		<!DOCTYPE html>
 		<html lang="es">
 			<head>
 				<meta charset='UTF-8' />
 				<meta name="title" content="Web site" /> 
-				<meta name="description" content="<?php echo $meta_name_description; ?>" />
-				<meta name="keywords" content="<?php echo $meta_name_keywords; ?>" />
+				<meta name="description" content="<?php echo $this->meta_name_description; ?>" />
+				<meta name="keywords" content="<?php echo $this->meta_name_keywords; ?>" />
 				<meta name="robots" content="All" />  
 				<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-				<title><?php echo $title; ?></title>
+				<title><?php echo $this->title; ?></title>
 				<!-- <link rel="shorcut icon" href="imagen para el favicon"> -->
 				<link rel="icon" type="image/gif" href="/images/favicon.ico">
 				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -40,7 +42,7 @@
 			<body>
 			<main>
 				<header>
-					<h1><?php echo $h1; ?></h1><hr />
+					<h1><?php echo $this->h1; ?></h1><hr />
 				</header>
 <?php			
 		}
@@ -50,7 +52,7 @@
 			<nav>
 				<ul>
 <?php
-			foreach($menus as $name => $url) {
+			foreach($this->menus as $name => $url) {
 ?>
 					<li><a href="<?php echo $url; ?>"><?php echo $name; ?></a></li>
 <?php
