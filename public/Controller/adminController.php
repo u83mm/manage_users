@@ -5,17 +5,7 @@
 
 	model\classes\Loader::init($_SERVER['DOCUMENT_ROOT'] . "/..");
 
-	if(isset($_POST['action'])) {
-		$action = $_POST['action'];
-	}
-	else if(isset($_GET['action'])) {
-		$action = $_GET['action'];
-	}
-	else {
-		$action = "index";
-	}
-
-	$action = strtolower($action);
+	$action = strtolower($_POST['action'] ?? $_GET['action'] ?? $action = "index");
 
 	switch($action) {
 		case "index":
