@@ -1,6 +1,8 @@
 <?php
 	declare(strict_types=1);
-	
+
+	use model\classes\Query;
+
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/../model/aplication_fns.php");
 
 	model\classes\Loader::init($_SERVER['DOCUMENT_ROOT'] . "/..");
@@ -15,13 +17,9 @@
 
 			try {
 				if (!empty($user_name) && !empty($password) && !empty($email)) {
-					$query = "SELECT * FROM user WHERE email = :val";                         
+					$query = new Query();
 
-					$stm = $dbcon->pdo->prepare($query);
-					$stm->bindValue(":val", $email);                            
-					$stm->execute();       
-					$rows = $stm->fetch();
-					$stm->closeCursor();
+					$rows = $query->selectAllBy("user", "email", $email, $dbcon);
 
 					if ($rows) {
 						$error_msg = "<p class='error'>El email '{$email}' ya está registrado</p>";

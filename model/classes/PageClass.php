@@ -12,7 +12,7 @@
 			"Home |"			=>	"/",
 			"Registration |"	=> 	"/Controller/registerController.php",
 			"Administration |"	=>	"/Controller/adminController.php",
-			"Login |"			=> 	"/",			
+			"Login |"			=> 	"/Controller/loginController.php",			
 		);
 
 		public function do_html_header(string $title, string $h1, string $meta_name_description, string $meta_name_keywords) {
