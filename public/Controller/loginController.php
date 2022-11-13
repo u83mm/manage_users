@@ -33,7 +33,7 @@
 								$_SESSION['user_name'] = $result['user_name'];
 								$_SESSION['role'] = $result['role'];												
 								$stm->closeCursor();
-								header("Location: /Controller/adminController.php");											
+								header("Location: /");											
 							}
 							else {
 								$error_msg = "<p class='error'>Tu usuario y contraseña no coinciden</p>";
@@ -52,7 +52,7 @@
 				}									
 			}
 			else {		
-				header("Location: /Controller/adminController.php");
+				header("Location: /");
 			}			
 			
 			include(SITE_ROOT . "/view/login_view.php");		

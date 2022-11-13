@@ -61,6 +61,7 @@
 				<ul>
 <?php
 			foreach($this->menus as $name => $url) {
+				if((!isset($_SESSION['role']) && $name === "Administration |") || (isset($_SESSION['role']) && $_SESSION['role'] !== "ROLE_ADMIN" && $name === "Administration |")) continue;
 ?>
 					<li><a href="<?php echo $url; ?>"><?php echo $name; ?></a></li>
 <?php

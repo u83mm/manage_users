@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 07-11-2022 a las 23:53:43
+-- Tiempo de generación: 13-11-2022 a las 21:02:00
 -- Versión del servidor: 10.8.3-MariaDB-1:10.8.3+maria~jammy
 -- Versión de PHP: 8.0.22
 
@@ -59,9 +59,18 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `user_name`, `password`, `email`, `id_role`) VALUES
-(1, 'admin', 'asdasd', 'prueba@prueba.com', 2),
-(2, 'admin', '$2y$10$a0dTNHS3oC3fOYjU/5NmbuRoNjErDdURkxf8kGQEovGcTp89R.V9.', 'pepe@pepe.com', 2),
-(6, 'admin', '$2y$10$CkY/jX7x7SIt8Jht9Er4BOwewMhvdz2/kxWl9VNoGPfpHRIovGata', 'admin@admin.com', 2);
+(1, 'omulrooney0', 'vdUUZ6wMSSIi', 'fpoulton0@trellian.com', 2),
+(2, 'pnusche1', 'kn4dZSZy', 'oalten1@timesonline.co.uk', 2),
+(3, 'rjob2', 'oxvceL9DGKt', 'hkoschke2@columbia.edu', 2),
+(4, 'gbeckhurst3', 'hli11TCLLy5W', 'cmcelory3@desdev.cn', 2),
+(5, 'cvain4', 'kmSK2dW1x', 'pmcmillan4@skype.com', 2),
+(6, 'csteddall5', 'rRaBKnY14Ke', 'afussen5@t.co', 2),
+(7, 'isopper6', 'cjphThcO', 'mhaylett6@symantec.com', 2),
+(8, 'bmoore7', 'iVE8hSSvOaKw', 'bwoolforde7@joomla.org', 2),
+(9, 'lpostgate8', 's7hUPoCRjkiI', 'wallbut8@infoseek.co.jp', 2),
+(10, 'fhansed9', 'saV7FmEJq', 'bbartke9@gnu.org', 2),
+(11, 'admin', '$2y$10$ZPz9iE1LLeaxLkQ/Syb22Oo26ngDXQeyRiLDoIl7vqZ11zCn8Th8q', 'admin@admin.com', 1),
+(12, 'pepe', '$2y$10$Y0WhEg3GOfo/qrgvWkl8d.B5SR8rFFrXIClPOzUytu8mneTrY.s0q', 'pepe@pepe.com', 2);
 
 --
 -- Índices para tablas volcadas
@@ -95,7 +104,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas
