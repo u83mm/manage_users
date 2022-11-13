@@ -15,6 +15,14 @@
 			"Login |"			=> 	"/Controller/loginController.php",			
 		);
 
+		public function __construct()
+		{
+			if (isset($_SESSION['id_user'])) {
+				array_pop($this->menus);
+				$this->menus["Logout"] = "/Controller/loginController.php?action=logout"; 
+			}
+		}
+
 		public function do_html_header(string $title, string $h1, string $meta_name_description, string $meta_name_keywords) {
 ?>
 		<!DOCTYPE html>
