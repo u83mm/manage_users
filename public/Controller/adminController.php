@@ -79,5 +79,26 @@
 					include(SITE_ROOT . "/view/database_error.php");					
 				}								
 			break;
+
+		case "update":
+			$user_name = $_REQUEST['user_name'] ?? "";
+			$id_user = $_REQUEST['id_user'] ?? "";
+			$email = $_REQUEST['email'] ?? "";
+
+			try {
+				$query = new Query();
+				$query->updateRegistry("user", $user_name, $email, $id_user, $dbcon);
+
+				$success_msg = "<p class='alert alert-success text-center'>Registro actualizado correctamente</p>";
+
+				include(SITE_ROOT . "/view/database_error.php");
+
+			} catch (\Throwable $th) {			
+				$error_msg = "<p>Hay problemas al conectar con la base de datos, revise la configuración 
+						de acceso.</p><p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
+				include(SITE_ROOT . "/view/database_error.php");				
+			}
+
+			break;
 	}
 ?>

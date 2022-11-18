@@ -30,6 +30,19 @@
 
             return $rows;
         }
+
+        public function updateRegistry(string $table, string $user_name, string $email, string $id_user, object $dbcon)
+        {
+            $query = "UPDATE $table SET user_name = :user_name, email = :email WHERE id_user = :id_user";                 
+
+            $stm = $dbcon->pdo->prepare($query); 
+            $stm->bindValue(":user_name", $user_name);				
+            $stm->bindValue(":email", $email);
+            $stm->bindValue(":id_user", $id_user);              
+            $stm->execute();       				
+            $stm->closeCursor();
+            $dbcon = null;            
+        }
     }
     
 ?>

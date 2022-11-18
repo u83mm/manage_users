@@ -10,6 +10,7 @@
     <div class="col-6 mx-auto">
         <?php echo $message = $error_msg ?? $success_msg ?? ""; ?>
         <form action="#" method="post">
+            <input type="hidden" name="id_user" value="<?php echo $user['id_user']?>">
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="user_name">User:</label>
                 <div class="col-sm-8">
@@ -19,7 +20,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label"" for="password">Password:</label>
                 <div class="col-sm-8">
-                    <input class="form-control" type="password" name="password" id="password" value="<?php echo $user['password']; ?>" required>
+                    <input class="form-control" type="password" name="password" id="password" value="<?php echo $user['password']; ?>" disabled>
                 </div>                
             </div>
             <div class="row mb-3">
@@ -31,7 +32,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2" for="nome">&nbsp;</label>
                 <div class="col-sm-8">
-                    <input type="submit" value="Update">
+                    <input type="submit" name="action" value="Update">
                 </div>                
             </div>                                                              
         </form>
