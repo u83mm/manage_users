@@ -18,6 +18,7 @@
                         <th>Password</th>
                         <th>Email</th>
                         <th>Role</th>
+                        <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,6 +29,12 @@
                         <td><?php echo $value['password']; ?></td>
                         <td><?php echo $value['email']; ?></td>
                         <td><?php echo $value['role']; ?></td>
+                        <td>
+                            <form action="#" method="post" class="d-inline">
+                                <input type="hidden" name="id_user" value="<?php echo $value['id_user']; ?>">
+                                <input type="submit" name="action" value="Show">
+                            </form>
+                        </td>
                     </tr>
                 <?php } ?>
                 </tbody>

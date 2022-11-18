@@ -58,10 +58,26 @@
 			} catch (\Throwable $th) {			
 				$error_msg = "<p>Hay problemas al conectar con la base de datos, revise la configuración 
 						de acceso.</p><p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
-				include(SITE_ROOT . "/view/database_error.php");
-				exit();
+				include(SITE_ROOT . "/view/database_error.php");				
 			}					
 
+			break;
+		
+		case "show":
+				$id_user = $_REQUEST['id_user'];
+
+				$query = new Query();
+
+				try {
+					$user = $query->selectOneBy("user", "id_user", $id_user, $dbcon);
+
+					include(SITE_ROOT . "/view/admin/user_show_view.php");
+					
+				} catch (\Throwable $th) {
+					$error_msg = "<p>Hay problemas al conectar con la base de datos, revise la configuración 
+						de acceso.</p><p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
+					include(SITE_ROOT . "/view/database_error.php");					
+				}								
 			break;
 	}
 ?>
