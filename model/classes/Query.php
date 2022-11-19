@@ -43,6 +43,18 @@
             $stm->closeCursor();
             $dbcon = null;            
         }
+
+        public function updatePassword(string $table, string $password, string $id_user, object $dbcon)
+        {
+            $query = "UPDATE $table SET password = :password WHERE id_user = :id_user";                 
+
+            $stm = $dbcon->pdo->prepare($query); 
+            $stm->bindValue(":password", password_hash($password, PASSWORD_DEFAULT));				            
+            $stm->bindValue(":id_user", $id_user);              
+            $stm->execute();       				
+            $stm->closeCursor();
+            $dbcon = null;            
+        }
     }
     
 ?>

@@ -2,6 +2,7 @@
 	declare(strict_types=1);
 
 	use model\classes\Query;
+use model\classes\Validate;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/../model/aplication_fns.php");
 
@@ -99,6 +100,34 @@
 				include(SITE_ROOT . "/view/database_error.php");				
 			}
 
+			break;
+
+		case "change password":
+			$validate = new Validate();
+
+			$password = $validate->test_input($_REQUEST['password'] ?? "");
+			$id_user = $validate->test_input($_REQUEST['id_user'] ?? "");
+			$newPassword = $validate->test_input($_REQUEST['new_password'] ?? "");
+
+			try {
+				if (!empty($password) && !empty($id_user) && !empty($newPassword)) {
+					if ($password !== $newPassword) {
+						$error_msg = "<p class='alert alert-danger text-center'>Las contraseñas no son iguales</p>";
+					} else {
+						$query = new Query();
+						$query->updatePassword("user", $newPassword, $id_user, $dbcon);
+
+						$success_msg = "<p class='alert alert-success text-center'>Se ha cambiado la contraseña</p>";
+					}
+					
+				}
+			} catch (\Throwable $th) {
+				$error_msg = "<p>Hay problemas al conectar con la base de datos, revise la configuración 
+						de acceso.</p><p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
+				include(SITE_ROOT . "/view/database_error.php");
+			}
+
+			include(SITE_ROOT . "/view/admin/user_change_password.php");
 			break;
 	}
 ?>

@@ -18,7 +18,7 @@
                 </div>                
             </div>
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label"" for="password">Password:</label>
+                <label class="col-sm-2 col-form-label" for="password">Password:</label>
                 <div class="col-sm-8">
                     <input class="form-control" type="password" name="password" id="password" value="<?php echo $user['password']; ?>" disabled>
                 </div>                
@@ -33,6 +33,7 @@
                 <label class="col-sm-2" for="nome">&nbsp;</label>
                 <div class="col-sm-8">
                     <input type="submit" name="action" value="Update">
+                    <input type="submit" name="action" value="Change Password">
                 </div>                
             </div>                                                              
         </form>
