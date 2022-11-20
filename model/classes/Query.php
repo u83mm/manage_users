@@ -55,6 +55,17 @@
             $stm->closeCursor();
             $dbcon = null;            
         }
+
+        public function deleteRegistry(string $table, string $id_user, object $dbcon)
+        {
+            $query = "DELETE FROM $table WHERE id_user = :id_user";                 
+
+            $stm = $dbcon->pdo->prepare($query);             			            
+            $stm->bindValue(":id_user", $id_user);              
+            $stm->execute();       				
+            $stm->closeCursor();
+            $dbcon = null;            
+        }
     }
     
 ?>

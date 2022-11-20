@@ -12,10 +12,9 @@
         <div class="row">
             <table class="table table-striped table-bordered">
                 <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th>Id</th>
-                        <th>User Name</th>
-                        <th>Password</th>
+                        <th>User Name</th>                        
                         <th>Email</th>
                         <th>Role</th>
                         <th>Options</th>
@@ -25,15 +24,15 @@
                 <?php foreach ($rows as $value) { ?>
                     <tr>
                         <td><?php echo $value['id_user']; ?></td>
-                        <td><?php echo $value['user_name']; ?></td>
-                        <td><?php echo $value['password']; ?></td>
+                        <td><?php echo $value['user_name']; ?></td>                        
                         <td><?php echo $value['email']; ?></td>
                         <td><?php echo $value['role']; ?></td>
-                        <td>
+                        <td class="text-center">
                             <form action="#" method="post" class="d-inline">
                                 <input type="hidden" name="id_user" value="<?php echo $value['id_user']; ?>">
-                                <input type="submit" name="action" value="Show">
+                                <input class="btn btn-outline-success" type="submit" name="action" value="Show">
                             </form>
+                            <?php include(SITE_ROOT . "/view/admin/user_delete_form.php"); ?>
                         </td>
                     </tr>
                 <?php } ?>
