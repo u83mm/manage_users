@@ -32,7 +32,7 @@
                                 <input type="hidden" name="id_user" value="<?php echo $value['id_user']; ?>">
                                 <input class="btn btn-outline-success" type="submit" name="action" value="Show">
                             </form>
-                            <?php include(SITE_ROOT . "/view/admin/user_delete_form.php"); ?>
+                            <?php include(SITE_ROOT . "/../view/admin/user_delete_form.php"); ?>
                         </td>
                     </tr>
                 <?php } ?>
@@ -41,8 +41,7 @@
         </div>
         <div class="row">
             <form action="#" method="post"><input type="submit" class="btn btn-primary mb-5" name="action" value="New"></form>
-        </div>
-        
+        </div>        
     </div>    
 <?php
 	$page->do_html_footer();

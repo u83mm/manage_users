@@ -10,16 +10,16 @@
 		public $meta_name_keywords = "Aquí van palabras clave para los buscadores";
 		public $menus = array (
 			"Home |"			=>	"/",
-			"Registration |"	=> 	"/Controller/registerController.php",
-			"Administration |"	=>	"/Controller/adminController.php",
-			"Login |"			=> 	"/Controller/loginController.php",			
+			"Registration |"	=> 	"/register.php",
+			"Administration |"	=>	"/admin.php",
+			"Login |"			=> 	"/login.php",			
 		);
 
 		public function __construct()
 		{
 			if (isset($_SESSION['id_user'])) {
 				array_pop($this->menus);
-				$this->menus["Logout"] = "/Controller/loginController.php?action=logout"; 
+				$this->menus["Logout"] = "/login.php?action=logout"; 
 			}
 		}
 

@@ -1,15 +1,29 @@
 <?php
-	declare(strict_types=1);
-	
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../model/aplication_fns.php");
+    namespace controller;
 
-	model\classes\Loader::init($_SERVER['DOCUMENT_ROOT'] . "/..");		
+    use PDO;
 
-	$action = strtolower($_POST['action'] ?? $_GET['action'] ?? $action = "login");
+    /**
+     * A class that contains the methods to login and logout. 
+     */
+    class LoginController
+    {       
+        private $dbcon;
 
-	switch($action) {
-		case "login":
-			// recogemos los datos del formulario
+        public function __construct(object $dbcon)
+        {
+            $this->dbcon = $dbcon;
+        }
+
+        /* Checking if the user is logged in. If not, it checks if the email and password are not
+        empty. If they are not empty, it checks if the email exists in the database. If it does, it
+        checks if the password is correct. If it is, it sets the session variables and redirects to
+        the home page. If the email does not exist, it displays an error message. If the password is
+        incorrect, it displays an error message. If the email and password are empty, it displays
+        the login form. */
+        public function login()
+        {
+            // recogemos los datos del formulario
 			$email = $_REQUEST['email'] ?? "";
 			$password = $_REQUEST['password'] ?? "";			
 
@@ -19,7 +33,7 @@
 					$query = "SELECT * FROM user INNER JOIN roles ON user.id_role = roles.id_roles WHERE email = :val";
 
 					try {
-						$stm = $dbcon->pdo->prepare($query);
+						$stm = $this->dbcon->pdo->prepare($query);
 						$stm->bindValue(":val", $email);				
 						$stm->execute();					
 
@@ -37,17 +51,17 @@
 							}
 							else {
 								$error_msg = "<p class='error'>Tu usuario y contraseña no coinciden</p>";
-								include(SITE_ROOT . "/view/login_view.php");
+								include(SITE_ROOT . "/../view/login_view.php");
 							}			
 						}
 						else {		
 							$error_msg = "<p class='error'>El usuario \"{$email}\" no existe en la base de datos</p>";										
-							include(SITE_ROOT . "/view/login_view.php");
+							include(SITE_ROOT . "/../view/login_view.php");
 						}
 					} catch (\Throwable $th) {					
 						$error_msg = "<p>Hay problemas al conectar con la base de datos, revise la configuración 
 							de acceso.</p><p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
-						include(SITE_ROOT . "/view/database_error.php");				
+						include(SITE_ROOT . "/../view/database_error.php");				
 					}	
 				}									
 			}
@@ -55,12 +69,13 @@
 				header("Location: /");
 			}			
 			
-			include(SITE_ROOT . "/view/login_view.php");		
+			include(SITE_ROOT . "/../view/login_view.php");	
+        }
 
-			break;
-			
-		case "logout":
-			unset($_SESSION['id_user']);
+        /* Unsetting the session variables and destroying the session. */
+        public function logout()
+        {
+            unset($_SESSION['id_user']);
 			unset($_SESSION['user_name']);
 			unset($_SESSION['role']);
 		  
@@ -68,9 +83,8 @@
 		  
 			session_destroy();
 			setcookie('PHPSESSID', "0", time() - 3600);
-		  
-			header("Location: /Controller/loginController.php");
-
-			break;
-	}
+		  			
+            $this->login($this->dbcon);
+        }
+    }    
 ?>
