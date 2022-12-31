@@ -1,12 +1,12 @@
 <?php
-    namespace controller;
+    namespace Controller;
 
     use model\classes\Query;
     use model\classes\Validate;
 
     class AdminController
     {
-        private $dbcon;
+        private object $dbcon;
 
         public function __construct(object $dbcon)
         {
@@ -14,7 +14,7 @@
         }
 
         /** Show user index */
-        public function index()
+        public function index(): void
         {
             $query = "SELECT * FROM user INNER JOIN roles ON user.id_role = roles.id_roles";
 				
@@ -22,13 +22,13 @@
             $stm->execute();       
             $rows = $stm->fetchAll();
             $stm->closeCursor();
-            $this->dbcon = null;
+            //$this->dbcon = null;
 
             include(SITE_ROOT . "/../view/admin/index_view.php");
         }
 
         /** Create new user */
-        public function new()
+        public function new(): void
         {
             $user_name = $_REQUEST['user_name'] ?? "";
 				$password = $_REQUEST['password'] ?? "";
@@ -69,7 +69,7 @@
 				}			
         }
 
-        public function show()
+        public function show(): void
         {
             $id_user = $_REQUEST['id_user'];
 	
@@ -88,7 +88,7 @@
         }
 
         /** Update user */
-        public function update()
+        public function update(): void
         {
             $user_name = $_REQUEST['user_name'] ?? "";
             $id_user = $_REQUEST['id_user'] ?? "";
@@ -110,7 +110,7 @@
         }
 
         /** Change user password */
-        public function changePassword()
+        public function changePassword(): void
         {
             $validate = new Validate();
 	
@@ -140,7 +140,7 @@
         }
 
         /** Deleting a user from the database. */
-        public function delete()
+        public function delete(): void
         {
             $id_user = $_REQUEST['id_user'];
 	

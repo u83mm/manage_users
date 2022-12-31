@@ -1,5 +1,5 @@
 <?php
-    namespace controller;
+    namespace Controller;
 
     use model\classes\Query;    
 
@@ -8,7 +8,7 @@
      */
     class RegisterController
     {
-        private $dbcon;
+        private object $dbcon;
 
         public function __construct(object $dbcon)
         {
@@ -17,7 +17,7 @@
 
         /* A method of the class `RegisterController` that is called when the user clicks on the
         register button. */
-        public function register()
+        public function register(): void
         {
             $user_name = $_REQUEST['user_name'] ?? "";
 			$password = $_REQUEST['password'] ?? "";

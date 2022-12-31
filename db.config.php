@@ -7,8 +7,8 @@
 		'driver'	=>	'mysql',
 		'host'		=>	'db',
 		'dbname'	=>	'my_database',
-		'user'		=>	'pepe',
-		'password'	=>	'cantinflas',
+		'user'		=>	'admin',
+		'password'	=>	'admin',
 		'charset'	=>	'utf8mb4',
 		'errmode'	=> $options
 	];

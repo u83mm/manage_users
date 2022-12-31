@@ -1,14 +1,15 @@
 <?php
-    namespace controller;
+    namespace Controller;
 
     use PDO;
+	use Controller\IndexController;
 
     /**
      * A class that contains the methods to login and logout. 
      */
     class LoginController
     {       
-        private $dbcon;
+        private object $dbcon;
 
         public function __construct(object $dbcon)
         {
@@ -21,7 +22,7 @@
         the home page. If the email does not exist, it displays an error message. If the password is
         incorrect, it displays an error message. If the email and password are empty, it displays
         the login form. */
-        public function login()
+        public function login(): void
         {
             // recogemos los datos del formulario
 			$email = $_REQUEST['email'] ?? "";
@@ -47,7 +48,8 @@
 								$_SESSION['user_name'] = $result['user_name'];
 								$_SESSION['role'] = $result['role'];												
 								$stm->closeCursor();
-								header("Location: /");											
+																
+								header("Location: /");							
 							}
 							else {
 								$error_msg = "<p class='error'>Tu usuario y contraseña no coinciden</p>";
@@ -73,7 +75,7 @@
         }
 
         /* Unsetting the session variables and destroying the session. */
-        public function logout()
+        public function logout(): void
         {
             unset($_SESSION['id_user']);
 			unset($_SESSION['user_name']);
@@ -82,9 +84,9 @@
 			$_SESSION = array();
 		  
 			session_destroy();
-			setcookie('PHPSESSID', "0", time() - 3600);
-		  			
-            $this->login($this->dbcon);
+			setcookie('PHPSESSID', "0", time() - 3600);		  			            
+
+			header("Location: /login.php");	
         }
     }    
 ?>
