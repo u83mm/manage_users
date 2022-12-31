@@ -1,7 +1,7 @@
 ### CRUD TO MANAGE USERS
 1.- Clone the repository in a new directory of your choice ("directoryName").
 ```
-git clone https://github.com/u83mm/u83mm.git "directoryName"
+git clone https://github.com/u83mm/manage_users.git "directoryName"
 ```
 
 2.- Navigate to the new directory.
