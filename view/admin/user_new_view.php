@@ -9,7 +9,7 @@
 	<h4>NEW USER</h4>
     <div class="col-6 mx-auto">
         <?php echo $message = $error_msg ?? $success_msg ?? ""; ?>
-        <?php include(SITE_ROOT. "/view/admin/form_view.php"); ?>
+        <?php include(SITE_ROOT. "/../view/admin/form_view.php"); ?>
     </div>
 <?php
 	$home->do_html_footer();

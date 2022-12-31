@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 31-12-2022 a las 17:58:54
+-- Tiempo de generación: 31-12-2022 a las 20:05:53
 -- Versión del servidor: 10.8.3-MariaDB-1:10.8.3+maria~jammy
 -- Versión de PHP: 8.0.22
 
@@ -69,7 +69,7 @@ INSERT INTO `user` (`id_user`, `user_name`, `password`, `email`, `id_role`) VALU
 (8, 'bmoore7', 'iVE8hSSvOaKw', 'bwoolforde7@joomla.org', 2),
 (9, 'lpostgate8', 's7hUPoCRjkiI', 'wallbut8@infoseek.co.jp', 2),
 (10, 'fhansed9', 'saV7FmEJq', 'bbartke9@gnu.org', 2),
-(11, 'admin', '$2y$10$zNSjJmWjAg2Rn4vyKB/y4.wHEKWxhkhdVqPRotjK6DQO5fil5YbDG', 'admin@admin.com', 1),
+(11, 'admin', '$2y$10$UmlPg2q.E8FyQ/y8/zkcgu/OXaar1erO8gEldBqGI5BtB3vElwReq', 'admin@admin.com', 1),
 (12, 'pepe', '$2y$10$o6boSNPz0e2bd53A5fK8Ruff9C3n9hUkOIINtwuEh4t06eGSEcpEK', 'pepe@pepe.com', 2);
 
 --
