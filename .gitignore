@@ -20,7 +20,7 @@
 ###< symfony/phpunit-bridge ###
 
 ###> my files to ignore ###
-/log/
-/db_vol/
+/Application/log/
+/Application/db_vol/
 /pasos_develop.md
 ###< my files to ignore ###

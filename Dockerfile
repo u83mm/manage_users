@@ -5,6 +5,10 @@ ARG TIMEZONE="Europe/Madrid"
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 
+COPY /php.ini-development /usr/local/etc/php/
+COPY /php.ini-production /usr/local/etc/php/
+COPY /apache_conf/apache2.conf /etc/apache2
+
 COPY / /var/www/
 
 # Set timezone

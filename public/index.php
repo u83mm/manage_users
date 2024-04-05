@@ -1,12 +1,10 @@
 <?php
-	declare(strict_types=1);
-
-	use Controller\IndexController;
-
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../model/aplication_fns.php");
-
-	model\classes\Loader::init($_SERVER['DOCUMENT_ROOT'] . "/..");		
+	declare(strict_types=1); 
 	
-	$indexController = new IndexController();
-	$indexController->index();
+	use \model\classes\App;   
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../model/aplication_fns.php");	     
+
+    $app = new App;
+    $app->router();   
 ?>

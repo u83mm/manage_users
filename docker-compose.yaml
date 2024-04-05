@@ -1,4 +1,4 @@
-version: '3'
+
 services:
   db:    
     build: ./MariaDB/
@@ -29,6 +29,6 @@ services:
       - "80:80"
       tty: true
       volumes: 
-        - "../My_App:/var/www"
+        - "../manage_users:/var/www"
         - "./log/apache:/var/log/apache2"
         - "./log/php:/srv/var/log"      
