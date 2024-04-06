@@ -53,7 +53,7 @@
                     $rows = $query->selectAllBy("user", "email", $email, $this->dbcon);
 
                     if ($rows) {
-                        $error_msg = "<p class='error'>El email '{$email}' ya está registrado</p>";
+                        $error_msg = "<p class='text-center error'>El email '{$email}' ya está registrado</p>";
                         include(SITE_ROOT . "/../view/admin/user_new_view.php");											
                     }
                     else {
@@ -64,11 +64,10 @@
                         $stm->bindValue(":password", password_hash($password, PASSWORD_DEFAULT));
                         $stm->bindValue(":email", $email);              
                         $stm->execute();       				
-                        $stm->closeCursor();
-                        $this->dbcon = null;
+                        $stm->closeCursor();                        
         
-                        $success_msg = "<p>El usuario se ha registrado correctamente</p>";
-                        include(SITE_ROOT . "/../view/database_error.php");
+                        $this->message = "<p class='alert alert-success text-center'>El usuario se ha registrado correctamente</p>";
+                        $this->index();
                     }										
                 }
                 else {
