@@ -11,7 +11,7 @@
 		public $menus = array (
 			"Home |"			=>	"/",
 			"Registration |"	=> 	"/register.php",
-			"Administration |"	=>	"/admin.php",
+			"Administration |"	=>	"/admin",
 			"Login |"			=> 	"/login",			
 		);
 

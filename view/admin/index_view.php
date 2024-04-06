@@ -7,9 +7,9 @@
 	$page->do_html_nav($page->menus);
 ?>
 	<h4>Vista de Administración</h4>
-    <div class="col mx-auto">
+    <div class="col mx-auto mb-3">
         <?php echo $message = $error_msg ?? $success_msg ?? ""; ?>
-        <div class="row">
+        <div class="row table-responsive">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
                     <thead>
@@ -29,7 +29,7 @@
                             <td><?php echo $value['email']; ?></td>
                             <td><?php echo $value['role']; ?></td>
                             <td class="text-center">
-                                <form action="#" method="post" class="d-inline">
+                                <form action="/admin/show" method="post" class="d-inline">
                                     <input type="hidden" name="id_user" value="<?php echo $value['id_user']; ?>">
                                     <input class="btn btn-outline-success" type="submit" name="action" value="Show">
                                 </form>
@@ -42,7 +42,10 @@
             </div>            
         </div>
         <div class="row">
-            <form action="#" method="post"><input type="submit" class="btn btn-primary mb-5" name="action" value="New"></form>
+            <div class="col-12">
+                <a class="btn btn-primary" href="/admin/new">New</a>
+            </div>
+            <!-- <form action="#" method="post"><input type="submit" class="btn btn-primary mb-5" name="action" value="New"></form> -->        
         </div>        
     </div>    
 <?php
