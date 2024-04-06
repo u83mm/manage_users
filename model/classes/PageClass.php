@@ -12,14 +12,14 @@
 			"Home |"			=>	"/",
 			"Registration |"	=> 	"/register.php",
 			"Administration |"	=>	"/admin.php",
-			"Login |"			=> 	"/login.php",			
+			"Login |"			=> 	"/login",			
 		);
 
 		public function __construct()
 		{
 			if (isset($_SESSION['id_user'])) {
 				array_pop($this->menus);
-				$this->menus["Logout"] = "/login.php?action=logout"; 
+				$this->menus["Logout"] = "/login/logout"; 
 			}
 		}
 

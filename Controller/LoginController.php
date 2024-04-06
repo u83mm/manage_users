@@ -1,8 +1,8 @@
 <?php
-    namespace Controller;
+    declare(strict_types=1);
 
-    use PDO;
-	use Controller\IndexController;
+    //use PDO;
+	//use Controller\IndexController;
 
     /**
      * A class that contains the methods to login and logout. 
@@ -11,9 +11,9 @@
     {       
         private object $dbcon;
 
-        public function __construct(object $dbcon)
+        public function __construct()
         {
-            $this->dbcon = $dbcon;
+            $this->dbcon = DB_CON;
         }
 
         /* Checking if the user is logged in. If not, it checks if the email and password are not
@@ -22,8 +22,8 @@
         the home page. If the email does not exist, it displays an error message. If the password is
         incorrect, it displays an error message. If the email and password are empty, it displays
         the login form. */
-        public function login(): void
-        {
+        public function index(): void
+        {			
             // recogemos los datos del formulario
 			$email = $_REQUEST['email'] ?? "";
 			$password = $_REQUEST['password'] ?? "";			
@@ -86,7 +86,7 @@
 			session_destroy();
 			setcookie('PHPSESSID', "0", time() - 3600);		  			            
 
-			header("Location: /login.php");	
+			header("Location: /login");	
         }
     }    
 ?>
