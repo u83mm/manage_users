@@ -16,8 +16,9 @@ by this one with the directory name that you have choiced in step 1:
 ```
 "../directoryName:/var/www"
 ```
-4.- Create "db_vol" and "log" directories and inside "log" directory create "apache", "db" and "php" directories.
+4.- Create "db_vol" and "log" directories inside "Application" directory and inside "log" directory create "apache", "db" and "php" directories.
 ```
+cd Application
 mkdir db_vol log
 cd log
 mkdir apache db php
