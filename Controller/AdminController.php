@@ -110,12 +110,17 @@
                 /** Test access */
                 if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
 
-                $query = new Query();
-                $query->updateRegistry("user", $user_name, $email, $id_user, $this->dbcon);
-
-                $success_msg = "<p class='alert alert-success text-center'>Registro actualizado correctamente</p>";
-
-                include(SITE_ROOT . "/../view/database_error.php");
+                if(!empty($user_name) && !empty($id_user) && !empty($email)) {
+                    $query = new Query();
+                    $query->updateRegistry("user", $user_name, $email, $id_user, $this->dbcon);
+    
+                    $this->message = "<p class='alert alert-success text-center'>Registro actualizado correctamente</p>";
+                    $this->index();
+                }
+                else {
+                    $this->message = "<p class='text-center error'>You must fill all the fields</p>";
+                    $this->show();
+                }               
 
             } catch (\Throwable $th) {			
                 $error_msg = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";

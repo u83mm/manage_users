@@ -8,8 +8,8 @@
 ?>
 	<h4>SHOW USER</h4>
     <div class="col-6 mx-auto">
-        <?php echo $message = $error_msg ?? $success_msg ?? ""; ?>
-        <form action="#" method="post">
+        <?php echo $message = $error_msg ?? $success_msg ?? $this->message ?? ""; ?>
+        <form action="/admin/update" method="post">
             <input type="hidden" name="id_user" value="<?php echo $user['id_user']?>">
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="user_name">User:</label>
@@ -20,7 +20,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="password">Password:</label>
                 <div class="col-sm-8">
-                    <input class="form-control" type="password" name="password" id="password" value="<?php echo $user['password']; ?>" disabled>
+                    <input class="form-control" type="password" name="password" id="password" value="<?php echo $user['password']; ?>" readonly>
                 </div>                
             </div>
             <div class="row mb-3">
