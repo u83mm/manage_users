@@ -160,6 +160,45 @@ select {
 	padding: 0.5em;
 }
 
+.nav-link {
+	border: 0.1em solid white;	
+}
+
+.nav-link:hover {
+	background-color: gray;
+	color: white;
+	border: 0.1em solid darkgray;
+	border-radius: 0.3em;
+	-webkit-border-radius: 0.3em;
+	-moz-border-radius: 0.3em;
+	-ms-border-radius: 0.3em;
+	-o-border-radius: 0.3em;
+}
+
+.navbar-nav .nav-link.active {
+	background-color: gray;
+	color: white;
+	border: 0.1em solid darkgray;
+	border-radius: 0.3em;
+	-webkit-border-radius: 0.3em;
+	-moz-border-radius: 0.3em;
+	-ms-border-radius: 0.3em;
+	-o-border-radius: 0.3em;
+}
+
+.active {
+	color: rgb(154, 87, 5);
+}
+
+.nav-item span {
+	color: black;
+	padding-left: 0.3em;
+	display: inline-block
+}
+
+.nav-link{
+	display: inline;
+}
 /***************** Configuración para móviles **********************/
 @media (max-width:480px) {
 

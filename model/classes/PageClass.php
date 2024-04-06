@@ -4,22 +4,24 @@
 	namespace model\classes;
 
 	class PageClass {
+		use NavLinks;	
+
 		public $title = "Manage Users";
 		public $h1 = "Manage Users";
 		public $meta_name_description = "Aquí va una descripción del sitio";
 		public $meta_name_keywords = "Aquí van palabras clave para los buscadores";
-		public $menus = array (
-			"Home |"			=>	"/",
-			"Registration |"	=> 	"/register.php",
-			"Administration |"	=>	"/admin",
-			"Login |"			=> 	"/login",			
-		);
+		public array $nav_links = [];		
 
 		public function __construct()
-		{
+		{				
+			/** Configure menus by ROLE */			
+			if (isset($_SESSION['role']) && $_SESSION['role'] === 'ROLE_ADMIN')	$this->nav_links = $this->admin();			
+			if (isset($_SESSION['role']) && $_SESSION['role'] === 'ROLE_USER') $this->nav_links = $this->user();
+			if (!isset($_SESSION['role'])) $this->nav_links = $this->user();
+
 			if (isset($_SESSION['id_user'])) {
-				array_pop($this->menus);
-				$this->menus["Logout"] = "/login/logout"; 
+				array_pop($this->nav_links);
+				$this->nav_links["Logout"] = "/login/logout"; 
 			}
 		}
 
@@ -52,18 +54,13 @@
 <?php			
 		}
 
-		public function do_html_nav($menus=NULL) {
+		public function do_html_nav($menus=NULL, string $active_name=NULL) {
 ?>
 			<nav>
 				<ul>
-<?php
-			foreach($this->menus as $name => $url) {
-				if((!isset($_SESSION['role']) && $name === "Administration |") || (isset($_SESSION['role']) && $_SESSION['role'] !== "ROLE_ADMIN" && $name === "Administration |")) continue;
-?>
-					<li><a href="<?php echo $url; ?>"><?php echo $name; ?></a></li>
-<?php
-			}
-?>
+				<?php foreach($this->nav_links as $name => $url) :?>							
+					<li class="nav-item d-lg-inline-block"><a class="nav-link <?php if(isset($active_name) && strtolower($name) === strtolower($active_name)) echo "active"; ?>" href="<?php echo $url; ?>"><?php echo $name; ?></a><span>|</span></li>
+				<?php endforeach ?>	
 				</ul>
 			</nav>
 			<noscript><h4>Tienes javaScript desactivado</h4></noscript>
