@@ -8,7 +8,7 @@
 ?>
 	<h4>Vista de Administración</h4>
     <div class="col mx-auto mb-3">
-        <?php echo $message = $error_msg ?? $success_msg ?? ""; ?>
+        <?php echo $message = $error_msg ?? $success_msg ?? $this->message ?? ""; ?>
         <div class="row table-responsive">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">

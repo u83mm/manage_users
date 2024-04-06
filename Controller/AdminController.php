@@ -9,7 +9,7 @@
     {
         use AccessControl;        
 
-        public function __construct(private object $dbcon = DB_CON)
+        public function __construct(private object $dbcon = DB_CON, private string $message = "")
         {
                         
         }
@@ -32,9 +32,7 @@
                 $error_msg = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
 					include(SITE_ROOT . "/../view/database_error.php");
             }
-
             
-
             include(SITE_ROOT . "/../view/admin/index_view.php");
         }
 
@@ -172,7 +170,9 @@
 
                 $success_msg = "<p class='alert alert-success text-center'>Se ha eliminado el registro</p>";
 
-                include(SITE_ROOT . "/../view/database_error.php");
+                //include(SITE_ROOT . "/../view/database_error.php");
+                $this->message = $success_msg;
+                $this->index();
 
             } catch (\Throwable $th) {
                 $error_msg = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
