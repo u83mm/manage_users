@@ -9,7 +9,7 @@
 	<h4>SHOW USER</h4>
     <div class="col-6 mx-auto">
         <?php echo $message = $error_msg ?? $success_msg ?? $this->message ?? ""; ?>
-        <form action="/admin/update" method="post">
+        <form id="admin_form" action="/admin/update" method="post">
             <input type="hidden" name="id_user" value="<?php echo $user['id_user']?>">
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="user_name">User:</label>
@@ -33,7 +33,7 @@
                 <label class="col-sm-2" for="nome">&nbsp;</label>
                 <div class="col-sm-8">
                     <input type="submit" name="action" value="Update">
-                    <input type="submit" name="action" value="Change Password">
+                    <input id="change_passwd" type="submit" name="action" value="Change Password">
                 </div>                
             </div>                                                              
         </form>

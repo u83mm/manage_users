@@ -52,7 +52,7 @@
 								header("Location: /");							
 							}
 							else {
-								$error_msg = "<p class='error'>Tu usuario y contraseña no coinciden</p>";
+								$error_msg = "<p class='text-center error'>Bad credentials</p>";
 								include(SITE_ROOT . "/../view/login_view.php");
 							}			
 						}
