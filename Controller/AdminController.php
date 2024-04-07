@@ -21,7 +21,7 @@
                 /** Test access */
                 if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
 
-                $query = "SELECT * FROM user INNER JOIN roles ON user.id_role = roles.id_roles";
+                $query = "SELECT * FROM user INNER JOIN roles USING(id_role)";
 				
                 $stm = $this->dbcon->pdo->prepare($query);                                        
                 $stm->execute();       
