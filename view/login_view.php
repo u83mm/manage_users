@@ -13,13 +13,13 @@
             <div class="row mb-3">
                 <label class="col-sm-2  col-form-label" for="email">Email:</label>
                 <div class="col-sm-8">
-                    <input class="form-control" type="email" name="email" id="email" value="<?php echo $email; ?>" required>
+                    <input class="form-control" type="email" name="email" id="email" value="<?php echo $fields['email']; ?>" required>
                 </div>                
             </div> 
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label"" for="password">Password:</label>
                 <div class="col-sm-8">
-                    <input class="form-control" type="password" name="password" id="password" value="<?php echo $password; ?>" required>
+                    <input class="form-control" type="password" name="password" id="password" value="<?php echo $fields['password']; ?>" required>
                 </div>                
             </div>                          
             <div class="row mb-3">
