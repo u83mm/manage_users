@@ -2,19 +2,19 @@
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label" for="user_name">User:</label>
         <div class="col-sm-8">
-            <input class="form-control" type="text" name="user_name" id="user_name" required>
+            <input class="form-control" type="text" name="user_name" id="user_name" value="<?php if(isset($fields['user_name'])) echo $fields['user_name']; ?>">
         </div>                
     </div>
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label" for="password">Password:</label>
         <div class="col-sm-8">
-            <input class="form-control" type="password" name="password" id="password" required>
+            <input class="form-control" type="password" name="password" id="password" value="<?php if(isset($fields['password'])) echo $fields['password']; ?>">
         </div>                
     </div>
     <div class="row mb-3">
         <label class="col-sm-2  col-form-label" for="email">Email:</label>
         <div class="col-sm-8">
-            <input class="form-control" type="email" name="email" id="email" required>
+            <input class="form-control" type="email" name="email" id="email" value="<?php if(isset($fields['email'])) echo $fields['email']; ?>">
         </div>                
     </div>               
     <div class="row mb-3">

@@ -38,41 +38,59 @@
 
         /** Create new user */
         public function new(): void
-        {
-            $user_name  = $_REQUEST['user_name'] ?? "";
-            $password   = $_REQUEST['password'] ?? "";
-            $email      = $_REQUEST['email'] ?? "";
+        {            
+            // define variables			
+			$fields = [
+                'user_name' => "",				
+				'password'	=> "",
+                'email'		=> ""
+			];
+
+            $validate = new Validate;
 
             try {
                 /** Test access */
                 if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
+                
+                if($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    /** Get values from the form */
+                    $fields = [
+                        'user_name' =>  $validate->test_input($_REQUEST['user_name']),                        
+                        'password'	=>	$validate->test_input($_REQUEST['password']),
+                        'email'	    =>	$validate->test_input($_REQUEST['email'])
+                    ];
 
-                if (!empty($user_name) && !empty($password) && !empty($email)) {
-                    $query = new Query();
-
-                    $rows = $query->selectAllBy("user", "email", $email, $this->dbcon);
-
-                    if ($rows) {
-                        $error_msg = "<p class='text-center error'>El email '{$email}' ya está registrado</p>";
-                        include(SITE_ROOT . "/../view/admin/user_new_view.php");											
+                    /** Validate form */
+                    if(!$validate->validate_form($fields)) {
+                        $error_msg = $validate->get_msg();	
                     }
                     else {
-                        $query = "INSERT INTO user (user_name, password, email) VALUES (:name, :password, :email)";                 
+                        $query = new Query();
+
+                        $rows = $query->selectAllBy("user", "email", $fields['email'], $this->dbcon);
     
-                        $stm = $this->dbcon->pdo->prepare($query); 
-                        $stm->bindValue(":name", $user_name);
-                        $stm->bindValue(":password", password_hash($password, PASSWORD_DEFAULT));
-                        $stm->bindValue(":email", $email);              
-                        $stm->execute();       				
-                        $stm->closeCursor();                        
+                        if ($rows) {
+                            $error_msg = "<p class='text-center error'>El email '{$fields['email']}' ya está registrado</p>";                            										
+                        }
+                        else {
+                            $query = "INSERT INTO user (user_name, password, email) VALUES (:name, :password, :email)";                 
         
-                        $this->message = "<p class='alert alert-success text-center'>El usuario se ha registrado correctamente</p>";
-                        $this->index();
-                    }										
+                            $stm = $this->dbcon->pdo->prepare($query); 
+                            $stm->bindValue(":name", $fields['user_name']);
+                            $stm->bindValue(":password", password_hash($fields['password'], PASSWORD_DEFAULT));
+                            $stm->bindValue(":email", $fields['email']);              
+                            $stm->execute();       				
+                            $stm->closeCursor();                        
+            
+                            $this->message = "<p class='alert alert-success text-center'>El usuario se ha registrado correctamente</p>";
+                            $this->index();
+                            die;
+                        }
+                    }                    										
                 }
-                else {
-                    include(SITE_ROOT . "/../view/admin/user_new_view.php");
-                }
+
+                include(SITE_ROOT . "/../view/admin/user_new_view.php");                
+
             } catch (\Throwable $th) {			
                 $error_msg = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
                 include(SITE_ROOT . "/../view/database_error.php");				

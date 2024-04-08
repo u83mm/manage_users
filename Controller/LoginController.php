@@ -39,7 +39,7 @@
 						];
 	
 						if(!$fields['email']) $error_msg = "<p class='text-center error'>Enter a valid e-mail</p>";
-						elseif (!$validate->validate_form($fields)) {
+						elseif(!$validate->validate_form($fields)) {
 							$error_msg = $validate->get_msg();	
 						}
 						else {
