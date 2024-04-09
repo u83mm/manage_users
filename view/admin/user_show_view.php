@@ -33,7 +33,7 @@
                 <label class="col-sm-2" for="nome">&nbsp;</label>
                 <div class="col-sm-8">
                     <input type="submit" name="action" value="Update">
-                    <input id="change_passwd" type="submit" name="action" value="Change Password">
+                    <input id="change_passwd" type="submit" value="Change Password">
                 </div>                
             </div>                                                              
         </form>

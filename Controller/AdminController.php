@@ -149,27 +149,30 @@
 
         /** Change user password */
         public function changePassword(): void
-        {
-            $validate = new Validate();
-	
-            $password = $validate->test_input($_REQUEST['password'] ?? "");
-            $id_user = $validate->test_input($_REQUEST['id_user'] ?? "");
-            $newPassword = $validate->test_input($_REQUEST['new_password'] ?? "");
+        {            
+            $validate = new Validate();	            
 
             try {
                 /** Test access */
                 if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
 
-                if (!empty($password) && !empty($id_user) && !empty($newPassword)) {
-                    if ($password !== $newPassword) {
-                        $error_msg = "<p class='alert alert-danger text-center'>Las contraseñas no son iguales</p>";
+                if($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $fields = [
+                        'password'      =>  $validate->test_input($_REQUEST['password']),
+                        'id_user'       =>  $validate->test_input($_REQUEST['id_user']),
+                        'new_password'  =>  isset($_REQUEST['new_password']) ? $validate->test_input($_REQUEST['new_password']) : ""
+                    ];
+                }
+
+                if($validate->validate_form($fields)) {
+                    if ($fields['password'] !== $fields['new_password']) {
+                        $error_msg = "<p class='alert alert-danger text-center'>Passwords don't match</p>";
                     } else {
                         $query = new Query();
-                        $query->updatePassword("user", $newPassword, $id_user, $this->dbcon);
+                        $query->updatePassword("user", $fields['new_password'], $fields['id_user'], $this->dbcon);
 
-                        $success_msg = "<p class='alert alert-success text-center'>Se ha cambiado la contraseña</p>";
+                        $success_msg = "<p class='alert alert-success text-center'>Password updated</p>";
                     }
-                    
                 }
             } catch (\Throwable $th) {
                 $error_msg = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";

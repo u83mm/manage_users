@@ -10,17 +10,17 @@
     <div class="col-6 mx-auto">
         <?php echo $message = $error_msg ?? $success_msg ?? ""; ?>
         <form action="<?php PATH ?>" method="post"> 
-            <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">           
+            <input type="hidden" name="id_user" value="<?php if(isset($fields['id_user'])) echo $fields['id_user']; ?>">           
             <div class="row mb-3">
                 <label class="col-sm-4 col-form-label" for="password">Password:</label>
                 <div class="col-sm-6">
-                    <input class="form-control" type="password" name="password" id="password" required>
+                    <input class="form-control" type="password" name="password" id="password" value="<?php if(isset($fields['password'])) echo $fields['password']; ?>" required>
                 </div>                
             </div>
             <div class="row mb-3">
                 <label class="col-sm-4 col-form-label" for="new_password">Repeat Password:</label>
                 <div class="col-sm-6">
-                    <input class="form-control" type="password" name="new_password" id="new_password" required>
+                    <input class="form-control" type="password" name="new_password" id="new_password" value="<?php if(isset($fields['new_password'])) echo $fields['new_password']; ?>" required>
                 </div>                
             </div>               
             <div class="row mb-3">
