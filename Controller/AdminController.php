@@ -39,27 +39,25 @@
         /** Create new user */
         public function new(): void
         {            
-            // define variables			
+            // Define variables			
 			$fields = [];
-
             $validate = new Validate;
 
             try {
-                /** Test access */
+                // Test access
                 if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
                 
                 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    /** Get values from the form */
+                    // Get values from the form
                     $fields = [
                         'user_name' =>  $validate->test_input($_REQUEST['user_name']),                        
                         'password'	=>	$validate->test_input($_REQUEST['password']),
                         'email'	    =>	$validate->test_input($_REQUEST['email'])
                     ];
 
-                    /** Validate form */
+                    // Validate form
                     if($validate->validate_form($fields)) {
                         $query = new Query();
-
                         $rows = $query->selectAllBy("user", "email", $fields['email'], $this->dbcon);
     
                         if ($rows) {

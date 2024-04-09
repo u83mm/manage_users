@@ -21,40 +21,31 @@
         the login form. */
         public function index(): void
         {			
-            // define variables			
-			$fields = [
-				'email'		=> "",
-				'password'	=> ""
-			];
-
+            // Define variables			
+			$fields = [];
 			$validate = new Validate;
 			
 			try {
 				if(!isset($_SESSION['id_user'])) {	
 					if($_SERVER['REQUEST_METHOD'] == 'POST') {
-						// get values from the form
+						// Get values from the form
 						$fields = [
-							'email'	=>	$validate->validate_email($_REQUEST['email']) ? $validate->test_input($_REQUEST['email']) : false,
+							'email'		=>	$validate->test_input($_REQUEST['email']),
 							'password'	=>	$validate->test_input($_REQUEST['password'])
 						];
 	
-						if(!$fields['email']) $error_msg = "<p class='text-center error'>Enter a valid e-mail</p>";
-						elseif(!$validate->validate_form($fields)) {
-							$error_msg = $validate->get_msg();	
-						}
-						else {
-							// hacemos la consulta a la DB				
+						if($validate->validate_form($fields)) {											
 							$query = "SELECT * FROM user INNER JOIN roles USING(id_role) WHERE email = :val";
 	
 							$stm = $this->dbcon->pdo->prepare($query);
 							$stm->bindValue(":val", $fields['email']);				
 							$stm->execute();					
 	
-							// si encuentra el usuario en la DB
+							// Look for a user 
 							if($stm->rowCount() == 1) {
 								$result = $stm->fetch(PDO::FETCH_ASSOC);					
 								
-								// comprueba que la contraseña introducida coincide con la de la DB
+								// Testing passwords
 								if(password_verify($fields['password'], $result['password'])) {												
 									$_SESSION['id_user'] = $result['id_user'];						
 									$_SESSION['user_name'] = $result['user_name'];
@@ -69,7 +60,10 @@
 							}
 							else {		
 								$error_msg = "<p class='text-center error'>Bad credentials</p>";																							
-							}
+							}								
+						}
+						else {
+							$error_msg = $validate->get_msg();
 						}											
 					}									
 				}
