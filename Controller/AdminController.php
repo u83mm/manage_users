@@ -40,11 +40,7 @@
         public function new(): void
         {            
             // define variables			
-			$fields = [
-                'user_name' => "",				
-				'password'	=> "",
-                'email'		=> ""
-			];
+			$fields = [];
 
             $validate = new Validate;
 
@@ -61,10 +57,7 @@
                     ];
 
                     /** Validate form */
-                    if(!$validate->validate_form($fields)) {
-                        $error_msg = $validate->get_msg();	
-                    }
-                    else {
+                    if($validate->validate_form($fields)) {
                         $query = new Query();
 
                         $rows = $query->selectAllBy("user", "email", $fields['email'], $this->dbcon);
@@ -85,7 +78,10 @@
                             $this->message = "<p class='alert alert-success text-center'>El usuario se ha registrado correctamente</p>";
                             $this->index();
                             die;
-                        }
+                        }                        	
+                    }
+                    else {
+                        $error_msg = $validate->get_msg();
                     }                    										
                 }
 
