@@ -93,8 +93,7 @@
 
         public function show(): void
         {
-            $id_user = $_REQUEST['id_user'] ?? "";
-	
+            $id_user = $_REQUEST['id_user'] ?? "";	
             $query = new Query();
 
             try {
@@ -114,24 +113,32 @@
         /** Update user */
         public function update(): void
         {
-            $user_name = $_REQUEST['user_name'] ?? "";
-            $id_user = $_REQUEST['id_user'] ?? "";
-            $email = $_REQUEST['email'] ?? "";
+            $user = [];
+            $validate = new Validate;
 
             try {
                 /** Test access */
                 if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
 
-                if(!empty($user_name) && !empty($id_user) && !empty($email)) {
+                if($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $user = [
+                        'user_name' =>  $validate->test_input($_REQUEST['user_name']),
+                        'id_user'   =>  $validate->test_input($_REQUEST['id_user']),
+                        'password'  =>  "**************************",
+                        'email'     =>  $validate->test_input($_REQUEST['email'])
+                    ];
+                }
+
+                if($validate->validate_form($user)) {
                     $query = new Query();
-                    $query->updateRegistry("user", $user_name, $email, $id_user, $this->dbcon);
+                    $query->updateRegistry("user", $user['user_name'], $user['email'], $user['id_user'], $this->dbcon);
     
-                    $this->message = "<p class='alert alert-success text-center'>Registro actualizado correctamente</p>";
+                    $this->message = "<p class='alert alert-success text-center'>User updated successfully</p>";
                     $this->index();
                 }
                 else {
-                    $this->message = "<p class='text-center error'>You must fill all the fields</p>";
-                    $this->show();
+                    $this->message = $validate->get_msg();
+                    include(SITE_ROOT . "/../view/admin/user_show_view.php");
                 }               
 
             } catch (\Throwable $th) {			
