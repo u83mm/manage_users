@@ -2,7 +2,7 @@
     declare(strict_types=1);
 
     use model\classes\Query;
-use model\classes\Validate;
+	use model\classes\Validate;
 
     /**
      * register a new user in the database. 

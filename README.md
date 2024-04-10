@@ -19,10 +19,7 @@ by this one with the directory name that you have choiced in step 1:
 4.- Create "db_vol" and "log" directories inside "Application" directory and inside "log" directory create "apache", "db" and "php" directories.
 ```
 cd Application
-mkdir db_vol log
-cd log
-mkdir apache db php
-cd .. (to go back)
+mkdir db_vol log log/apache log/dg log/php
 ```
 5.- Build the project and stands up the containers
 ```
