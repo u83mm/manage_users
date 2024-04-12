@@ -6,7 +6,7 @@
 	$page->do_html_header($page->title, $page->h1, $page->meta_name_description, $page->meta_name_keywords);
 	$page->do_html_nav($page->nav_links, "registration");
 ?>	
-    <div class="col-6 mx-auto credentials">
+    <div class="col-10 col-md-6 mx-auto credentials">
         <h4>Signup</h4>
         <?php echo $message = $error_msg ?? $success_msg ?? ""; ?>
         <form action="#" method="post">
