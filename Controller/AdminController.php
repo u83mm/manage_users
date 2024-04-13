@@ -20,13 +20,9 @@
             try {
                 /** Test access */
                 if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
-
-                $query = "SELECT * FROM user INNER JOIN roles USING(id_role) ORDER BY id_user";
-				
-                $stm = $this->dbcon->pdo->prepare($query);                                        
-                $stm->execute();       
-                $rows = $stm->fetchAll();
-                $stm->closeCursor();                
+                
+                $query = new Query();
+                $rows = $query->selectAllInnerjoinByField('user', 'roles', 'id_role');				                             
                 
             } catch (\Throwable $th) {
                 $error_msg = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
@@ -195,8 +191,7 @@
                 $query->deleteRegistry("user", $id_user, $this->dbcon);
 
                 $success_msg = "<p class='alert alert-success text-center'>Se ha eliminado el registro</p>";
-
-                //include(SITE_ROOT . "/../view/database_error.php");
+                
                 $this->message = $success_msg;
                 $this->index();
 
