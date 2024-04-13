@@ -7,7 +7,7 @@
 	$page->do_html_nav($page->nav_links, "registration");
 ?>	
     <div class="col-10 col-md-6 mx-auto credentials">
-        <h4>Signup</h4>
+        <h4>Sign Up</h4>
         <?php echo $message = $error_msg ?? $success_msg ?? ""; ?>
         <form action="#" method="post">
             <div class="row mb-3">
@@ -23,14 +23,24 @@
                 </div>                
             </div>
             <div class="row mb-3">
+                <label class="col-sm-2 col-form-label d-none" for="repeat_password">Repeat Password:</label>
+                <div class="col-sm-8 mx-auto">
+                    <input class="form-control" type="password" name="repeat_password" id="repeat_password" value="<?php if(isset($fields['repeat_password'])) echo $fields['repeat_password']; ?>" placeholder="Repeat Password" required>
+                </div>                
+            </div>
+            <div class="row mb-3">
                 <label class="col-sm-2  col-form-label d-none" for="email">Email:</label>
                 <div class="col-sm-8 mx-auto">
                     <input class="form-control" type="email" name="email" id="email" value="<?php if(isset($fields['email'])) echo $fields['email']; ?>" placeholder="Email" required>
                 </div>                
             </div>               
-            <div class="row mb-3">                
+            <div class="row mb-3">  
                 <div class="col-sm-8 mx-auto">
-                    <input type="submit" value="Register">
+                    <input type="checkbox" name="terms" id="terms" value="checked" <?php if(isset($fields['terms'])) echo $fields['terms']; ?> required>
+                    <label class="col col-form-label legalTerms" for="terms">I accept the Terms of Use and Privacy Policy</label>
+                </div>              
+                <div class="col-sm-8 mx-auto">
+                    <input type="submit" value="Sign Up">
                 </div> 
                 <div class="col-sm-8 mx-auto">
                     <p class="mt-3 d-inline-block">Already have an account?</p> <a href="/login">Login</a>

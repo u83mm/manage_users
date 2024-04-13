@@ -24,26 +24,32 @@
 			try {
 				if($_SERVER['REQUEST_METHOD'] === 'POST') {	
 					$fields = [
-						'user_name'	=> $validate->test_input($_REQUEST['user_name']),
-						'password'	=> $validate->test_input($_REQUEST['password']),
-						'email'		=> $validate->test_input($_REQUEST['email'])
-					];	
+						'user_name'		  => $validate->test_input($_REQUEST['user_name']),
+						'password'		  => $validate->test_input($_REQUEST['password']),
+						'repeat_password' => $validate->test_input($_REQUEST['repeat_password']),
+						'email'			  => $validate->test_input($_REQUEST['email']),
+						'terms'			  => isset($_REQUEST['terms']) ? $validate->test_input($_REQUEST['terms']) : ""
+					];
 					
 					if($validate->validate_form($fields)) {
 						$query = new Query();
 
 						$rows = $query->selectAllBy("user", "email", $fields['email'], $this->dbcon);
 	
-						if ($rows) {
+						if($fields['password'] !== $fields['repeat_password']) { // compare passwords
+							$error_msg = "<p class='error text-center'>Passwords don't match</p>";
+						}
+						elseif($rows) { // test if email is in use
 							$error_msg = "<p class='error text-center'>El email '{$fields['email']}' ya está registrado</p>";																	
 						}
 						else {
-							$query = "INSERT INTO user (user_name, password, email) VALUES (:name, :password, :email)";                 
+							$query = "INSERT INTO user (user_name, password, email, terms) VALUES (:name, :password, :email, :terms)";                 
 		
 							$stm = $this->dbcon->pdo->prepare($query); 
 							$stm->bindValue(":name", $fields['user_name']);
 							$stm->bindValue(":password", password_hash($fields['password'], PASSWORD_DEFAULT));
-							$stm->bindValue(":email", $fields['email']);              
+							$stm->bindValue(":email", $fields['email']);
+							$stm->bindValue(":terms", $fields['terms']);              
 							$stm->execute();       				
 							$stm->closeCursor();						
 			

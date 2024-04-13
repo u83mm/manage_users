@@ -28,7 +28,7 @@
                     <input type="submit" value="Login">                    
                 </div> 
                 <div class="col-sm-8 mx-auto">
-                    <p class="mt-3 d-inline-block">Don't have an account?</p> <a href="/register">Signup</a>
+                    <p class="mt-3 d-inline-block">Don't have an account?</p> <a href="/register">Sign Up</a>
                 </div>               
             </div>                                                              
         </form>
