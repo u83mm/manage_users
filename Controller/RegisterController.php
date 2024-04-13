@@ -43,15 +43,9 @@
 							$error_msg = "<p class='error text-center'>El email '{$fields['email']}' ya está registrado</p>";																	
 						}
 						else {
-							$query = "INSERT INTO user (user_name, password, email, terms) VALUES (:name, :password, :email, :terms)";                 
-		
-							$stm = $this->dbcon->pdo->prepare($query); 
-							$stm->bindValue(":name", $fields['user_name']);
-							$stm->bindValue(":password", password_hash($fields['password'], PASSWORD_DEFAULT));
-							$stm->bindValue(":email", $fields['email']);
-							$stm->bindValue(":terms", $fields['terms']);              
-							$stm->execute();       				
-							$stm->closeCursor();						
+							// save data
+							unset($fields['repeat_password']);													
+							$query->insertInto('user', $fields);
 			
 							$success_msg = "<p class='alert alert-success text-center'>El usuario se ha registrado correctamente</p>";
 							include(SITE_ROOT . "/../view/database_error.php");
