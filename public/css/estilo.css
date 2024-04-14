@@ -128,10 +128,6 @@ form {
 	margin-top: 2em;
 }
 
-.ejercicio ol {
-	list-style-type: upper-alpha;
-}
-
 pre {
 	margin-top: 2em;	
 }
@@ -218,6 +214,15 @@ select {
 
 .legalTerms {
 	font-size: 0.7em;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.center {
+	align-self: center;
 }
 
 /***************** Configuración para móviles **********************/
