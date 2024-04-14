@@ -12,6 +12,7 @@
 		</div>
 		<div class="col-6 center">
 			<h2>Welcome to Manage Users Application</h2>
+			<p>Add users with diferent roles to your sistem</p>
 		</div>
 	</section>		
 <?php

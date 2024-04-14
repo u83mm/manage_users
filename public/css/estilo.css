@@ -48,7 +48,7 @@ h1 {
 
 h2 {
 	font-size: 1.5em;
-	margin-bottom: 2em;
+	margin-bottom: 1em;
 }
 
 h3 {
@@ -80,8 +80,7 @@ nav li {
 }
 
 p{	
-	text-align: justify;
-	margin-left: 10px;
+	text-align: justify;	
 	margin-bottom: 1em;
 }
 
