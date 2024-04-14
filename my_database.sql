@@ -55,6 +55,7 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `id_role` int(11) NOT NULL DEFAULT 2,
   `terms` varchar(25) NOT NULL,
+  `create_at` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `email` (`email`),
   KEY `fk_user_role` (`id_role`)
@@ -68,18 +69,18 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` VALUES
-(1,'Luís','$2y$10$zNSjJmWjAg2Rn4vyKB/y4.wHEKWxhkhdVqPRotjK6DQO5fil5YbDG','fpoulton0@trellian.com',2,'checked'),
-(2,'pnusche1','kn4dZSZy','oalten1@timesonline.co.uk',2,'checked'),
-(3,'rjob2','$2y$10$urz15Zw2iYSm84HKXJbSdu6FF2jUo3B7TyfOZ1wUa9/UDLLJ5aLAO','hkoschke2@columbia.edu',2,'checked'),
-(4,'gbeckhurst3','hli11TCLLy5W','cmcelory3@desdev.cn',2,'checked'),
-(5,'cvain4','kmSK2dW1x','pmcmillan4@skype.com',2,'checked'),
-(6,'csteddall5','rRaBKnY14Ke','afussen5@t.co',2,'checked'),
-(7,'isopper6','cjphThcO','mhaylett6@symantec.com',2,'checked'),
-(8,'bmoore7','iVE8hSSvOaKw','bwoolforde7@joomla.org',2,'checked'),
-(9,'lpostgate8','s7hUPoCRjkiI','wallbut8@infoseek.co.jp',2,'checked'),
-(10,'fhansed9','saV7FmEJq','bbartke9@gnu.org',2,'checked'),
-(11,'admin','$2y$10$UmlPg2q.E8FyQ/y8/zkcgu/OXaar1erO8gEldBqGI5BtB3vElwReq','admin@admin.com',1,'checked'),
-(12,'pepe','$2y$10$o6boSNPz0e2bd53A5fK8Ruff9C3n9hUkOIINtwuEh4t06eGSEcpEK','pepe@pepe.com',2,'checked');
+(1,'Luís','$2y$10$zNSjJmWjAg2Rn4vyKB/y4.wHEKWxhkhdVqPRotjK6DQO5fil5YbDG','fpoulton0@trellian.com',2,'checked','2024-04-14 18:25:17'),
+(2,'pnusche1','kn4dZSZy','oalten1@timesonline.co.uk',2,'checked','2024-04-14 18:25:17'),
+(3,'rjob2','$2y$10$urz15Zw2iYSm84HKXJbSdu6FF2jUo3B7TyfOZ1wUa9/UDLLJ5aLAO','hkoschke2@columbia.edu',2,'checked','2024-04-14 18:25:17'),
+(4,'gbeckhurst3','hli11TCLLy5W','cmcelory3@desdev.cn',2,'checked','2024-04-14 18:25:17'),
+(5,'cvain4','kmSK2dW1x','pmcmillan4@skype.com',2,'checked','2024-04-14 18:25:17'),
+(6,'csteddall5','rRaBKnY14Ke','afussen5@t.co',2,'checked','2024-04-14 18:25:17'),
+(7,'isopper6','cjphThcO','mhaylett6@symantec.com',2,'checked','2024-04-14 18:25:17'),
+(8,'bmoore7','iVE8hSSvOaKw','bwoolforde7@joomla.org',2,'checked','2024-04-14 18:25:17'),
+(9,'lpostgate8','s7hUPoCRjkiI','wallbut8@infoseek.co.jp',2,'checked','2024-04-14 18:25:17'),
+(10,'fhansed9','saV7FmEJq','bbartke9@gnu.org',2,'checked','2024-04-14 18:25:17'),
+(11,'admin','$2y$10$UmlPg2q.E8FyQ/y8/zkcgu/OXaar1erO8gEldBqGI5BtB3vElwReq','admin@admin.com',1,'checked','2024-04-14 18:25:17'),
+(12,'pepe','$2y$10$o6boSNPz0e2bd53A5fK8Ruff9C3n9hUkOIINtwuEh4t06eGSEcpEK','pepe@pepe.com',2,'checked','2024-04-14 18:25:17');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -92,4 +93,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13 10:19:05
+-- Dump completed on 2024-04-14 18:51:53
