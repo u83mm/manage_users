@@ -172,29 +172,38 @@
                 if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
 
                 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $fields = [
+                    $this->fields = [
                         'password'      =>  $validate->test_input($_REQUEST['password']),
                         'id_user'       =>  $validate->test_input($_REQUEST['id_user']),
                         'new_password'  =>  isset($_REQUEST['new_password']) ? $validate->test_input($_REQUEST['new_password']) : ""
                     ];
                 }
 
-                if($validate->validate_form($fields)) {
-                    if ($fields['password'] !== $fields['new_password']) {
-                        $error_msg = "<p class='alert alert-danger text-center'>Passwords don't match</p>";
+                if($validate->validate_form($this->fields)) {
+                    if ($this->fields['password'] !== $this->fields['new_password']) {
+                        $this->message = "<p class='alert alert-danger text-center'>Passwords don't match</p>";
                     } else {
                         $query = new Query();
-                        $query->updatePassword("user", $fields['new_password'], $fields['id_user'], $this->dbcon);
+                        $query->updatePassword("user", $this->fields['new_password'], $this->fields['id_user'], $this->dbcon);
 
-                        $success_msg = "<p class='alert alert-success text-center'>Password updated</p>";
+                        $this->message = "<p class='alert alert-success text-center'>Password updated</p>";
                     }
                 }
+                else {
+                    $this->message = "<p class='alert alert-danger text-center'>You can't let empty fields</p>";
+                }                
+
             } catch (\Throwable $th) {
-                $error_msg = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
-                include(SITE_ROOT . "/../view/database_error.php");
+                $this->message = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
+                $this->render("/view/database_error.php", [
+                    'message'   =>  $this->message
+                ]);
             }
 
-            include(SITE_ROOT . "/../view/admin/user_change_password.php");
+            $this->render("/view/admin/user_change_password.php", [
+                'fields'    =>  $this->fields,
+                'message'   =>  $this->message
+            ]);
         }
 
         /** Deleting a user from the database. */

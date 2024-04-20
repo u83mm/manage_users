@@ -5,10 +5,10 @@
 
 	$home->do_html_header($home->title, $home->h1, $home->meta_name_description, $home->meta_name_keywords);
 	$home->do_html_nav($home->nav_links);
-?>
-	<h4>CHANGE PASSWORD</h4>
-    <div class="col-6 mx-auto">
-        <?php echo $message = $error_msg ?? $success_msg ?? ""; ?>
+?>	
+    <div class="col-6 mx-auto credentials">
+        <h4>CHANGE PASSWORD</h4>
+        <?php echo $message ?? ""; ?>
         <form action="<?php PATH ?>" method="post"> 
             <input type="hidden" name="id_user" value="<?php if(isset($fields['id_user'])) echo $fields['id_user']; ?>">           
             <div class="row mb-3">
