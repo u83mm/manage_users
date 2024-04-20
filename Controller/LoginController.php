@@ -1,14 +1,19 @@
 <?php
     declare(strict_types=1);
 
+	use model\classes\Controller;
 	use model\classes\Validate;
 
     /**
      * A class that contains the methods to login and logout. 
      */
-    class LoginController
+    class LoginController extends Controller
     {               
-        public function __construct(private object $dbcon = DB_CON)
+        public function __construct(
+			private object $dbcon = DB_CON,
+			private string $message = "",
+			private array $fields = []
+		)
         {
             
         }
@@ -21,24 +26,25 @@
         the login form. */
         public function index(): void
         {			
-            // Define variables			
-			$fields = [];
-			$validate = new Validate;
+            // Define variables						
+			$validate = new Validate;														
 			
 			try {
-				if(!isset($_SESSION['id_user'])) {	
+				if(!isset($_SESSION['id_user'])) {											
 					if($_SERVER['REQUEST_METHOD'] == 'POST') {
+						if(isset($_SESSION['access_try']) && $_SESSION['access_try'] >= 3) throw new Exception("You have reached the maximum number of tries", 1);					
+						
 						// Get values from the form
-						$fields = [
+						$this->fields = [
 							'email'		=>	$validate->test_input($_REQUEST['email']),
 							'password'	=>	$validate->test_input($_REQUEST['password'])
 						];
 	
-						if($validate->validate_form($fields)) {											
+						if($validate->validate_form($this->fields)) {											
 							$query = "SELECT * FROM user INNER JOIN roles USING(id_role) WHERE email = :val";
 	
 							$stm = $this->dbcon->pdo->prepare($query);
-							$stm->bindValue(":val", $fields['email']);				
+							$stm->bindValue(":val", $this->fields['email']);				
 							$stm->execute();					
 	
 							// Look for a user 
@@ -46,24 +52,27 @@
 								$result = $stm->fetch(PDO::FETCH_ASSOC);					
 								
 								// Testing passwords
-								if(password_verify($fields['password'], $result['password'])) {												
+								if(password_verify($this->fields['password'], $result['password'])) {												
 									$_SESSION['id_user'] = $result['id_user'];						
 									$_SESSION['user_name'] = $result['user_name'];
-									$_SESSION['role'] = $result['role'];												
+									$_SESSION['role'] = $result['role'];																				
 									$stm->closeCursor();
 																	
 									header("Location: /");							
 								}
 								else {
-									$error_msg = "<p class='text-center error'>Bad credentials</p>";								
+									isset($_SESSION['access_try']) ? $_SESSION['access_try'] ++ : 0;
+									$this->message = "<p class='text-center error'>Bad credentials</p>";								
 								}			
 							}
-							else {		
-								$error_msg = "<p class='text-center error'>Bad credentials</p>";																							
+							else {
+								isset($_SESSION['access_try']) ? $_SESSION['access_try'] ++ : 0;	
+								$this->message = "<p class='text-center error'>Bad credentials</p>";																							
 							}								
 						}
 						else {
-							$error_msg = $validate->get_msg();
+							isset($_SESSION['access_try']) ? $_SESSION['access_try'] ++ : 0;
+							$this->message = $validate->get_msg();
 						}											
 					}									
 				}
@@ -72,12 +81,15 @@
 				}
 						
 			} catch (\Throwable $th) {					
-				$error_msg = "<p>Hay problemas al conectar con la base de datos, revise la configuración 
+				$this->message = "<p>Hay problemas al conectar con la base de datos, revise la configuración 
 					de acceso.</p><p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
 				include(SITE_ROOT . "/../view/database_error.php");				
 			}
-									
-			include(SITE_ROOT . "/../view/login_view.php");			
+							
+			$this->render("/view/login_view.php", [
+				'message'	=>	$this->message,
+				'fields'	=>	$this->fields
+			]);		
         }
 
         /* Unsetting the session variables and destroying the session. */

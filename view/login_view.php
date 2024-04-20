@@ -8,8 +8,8 @@
 ?>	
     <div class="col-10 col-md-6 mx-auto credentials">
         <h4>Login</h4>
-        <?php echo $message = $error_msg ?? $success_msg ?? ""; ?>
-        <form action="#" method="post">
+        <?php echo $message; ?>
+        <form action="<?php PATH ?>" method="post">
             <div class="row mb-3">
                 <label class="col-sm-2 col-md-3 col-form-label d-none" for="email">Email:</label>
                 <div class="col-sm-8 mx-auto">
