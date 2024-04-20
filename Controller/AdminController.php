@@ -201,14 +201,14 @@
                 $query = new Query();
                 $query->deleteRegistry("user", $id_user, $this->dbcon);
 
-                $success_msg = "<p class='alert alert-success text-center'>Se ha eliminado el registro</p>";
-                
-                $this->message = $success_msg;
+                $this->message = "<p class='alert alert-success text-center'>Se ha eliminado el registro</p>";                               
                 $this->index();
 
             } catch (\Throwable $th) {
-                $error_msg = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
-                include(SITE_ROOT . "/../view/database_error.php");
+                $this->message = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
+                $this->render("/view/database_error.php", [
+                    'message'   =>  $this->message
+                ]);
             }
         }
     }    
