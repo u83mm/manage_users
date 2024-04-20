@@ -6,9 +6,9 @@
 	$page->do_html_header($page->title, $page->h1, $page->meta_name_description, $page->meta_name_keywords);
 	$page->do_html_nav($page->nav_links, "administration");
 ?>
-	<h4>Vista de Administración</h4>
+	<h4>Admin view</h4>
     <div class="col mx-auto mb-3">
-        <?php echo $message = $error_msg ?? $success_msg ?? $this->message ?? ""; ?>
+        <?php echo $message ?? ""; ?>
         <div class="row table-responsive">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
@@ -44,8 +44,7 @@
         <div class="row">
             <div class="col-12">
                 <a class="btn btn-primary" href="/admin/new">New</a>
-            </div>
-            <!-- <form action="#" method="post"><input type="submit" class="btn btn-primary mb-5" name="action" value="New"></form> -->        
+            </div>                   
         </div>        
     </div>    
 <?php

@@ -2,14 +2,19 @@
     declare(strict_types=1);
 
     use model\classes\AccessControl;
+    use model\classes\Controller;
     use model\classes\Query;
     use model\classes\Validate;
 
-    class AdminController
+    class AdminController extends Controller
     {
         use AccessControl;        
 
-        public function __construct(private object $dbcon = DB_CON, private string $message = "")
+        public function __construct(
+            private object $dbcon = DB_CON, 
+            private string $message = "",
+            private array $fields = []
+        )
         {
                         
         }
@@ -25,18 +30,20 @@
                 $rows = $query->selectAllInnerjoinByField('user', 'roles', 'id_role');				                             
                 
             } catch (\Throwable $th) {
-                $error_msg = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
-					include(SITE_ROOT . "/../view/database_error.php");
+                $this->message = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";					
+                $this->render("/view/database_error.php", ['message' => $this->message]);
             }
-            
-            include(SITE_ROOT . "/../view/admin/index_view.php");
+                        
+            $this->render("/view/admin/index_view.php", [
+                'message'   =>  $this->message,
+                'rows'      =>  $rows
+            ]);
         }
 
         /** Create new user */
         public function new(): void
         {            
-            // Define variables			
-			$fields = [];
+            // Define variables						
             $validate = new Validate;
 
             try {
@@ -45,45 +52,49 @@
                 
                 if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // Get values from the form
-                    $fields = [
+                    $this->fields = [
                         'user_name' =>  $validate->test_input($_REQUEST['user_name']),                        
                         'password'	=>	$validate->test_input($_REQUEST['password']),
                         'email'	    =>	$validate->test_input($_REQUEST['email'])
                     ];
 
                     // Validate form
-                    if($validate->validate_form($fields)) {
+                    if($validate->validate_form($this->fields)) {
                         $query = new Query();
-                        $rows = $query->selectAllBy("user", "email", $fields['email'], $this->dbcon);
+                        $rows = $query->selectAllBy("user", "email", $this->fields['email'], $this->dbcon);
     
                         if ($rows) {
-                            $error_msg = "<p class='text-center error'>El email '{$fields['email']}' ya está registrado</p>";                            										
+                            $this->message = "<p class='text-center error'>El email '{$this->fields['email']}' ya está registrado</p>";                            										
                         }
                         else {
-                            $query = "INSERT INTO user (user_name, password, email) VALUES (:name, :password, :email)";                 
+                            $query = "INSERT INTO user (user_name, password, email, terms) VALUES (:name, :password, :email, 'checked')";                 
         
                             $stm = $this->dbcon->pdo->prepare($query); 
-                            $stm->bindValue(":name", $fields['user_name']);
-                            $stm->bindValue(":password", password_hash($fields['password'], PASSWORD_DEFAULT));
-                            $stm->bindValue(":email", $fields['email']);              
+                            $stm->bindValue(":name", $this->fields['user_name']);
+                            $stm->bindValue(":password", password_hash($this->fields['password'], PASSWORD_DEFAULT));
+                            $stm->bindValue(":email", $this->fields['email']);              
                             $stm->execute();       				
                             $stm->closeCursor();                        
             
                             $this->message = "<p class='alert alert-success text-center'>El usuario se ha registrado correctamente</p>";
-                            $this->index();
-                            die;
+                            $this->index();                            
                         }                        	
                     }
                     else {
-                        $error_msg = $validate->get_msg();
+                        $this->message = $validate->get_msg();
                     }                    										
                 }
-
-                include(SITE_ROOT . "/../view/admin/user_new_view.php");                
+                
+                $this->render("/view/admin/user_new_view.php", [
+                    'message'   =>  $this->message,
+                    'fields'    =>  $this->fields,
+                ]);             
 
             } catch (\Throwable $th) {			
-                $error_msg = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
-                include(SITE_ROOT . "/../view/database_error.php");				
+                $this->message = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
+                $this->render("/view/database_error.php", [
+                    'message'   =>  $this->message
+                ]);			
             }			
         }
 
