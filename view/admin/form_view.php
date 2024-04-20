@@ -20,8 +20,8 @@
     <div class="row mb-3">
         <label class="col-sm-2" for="nome">&nbsp;</label>
         <div class="col-sm-8">
-            <input class="btn btn-primary" type="submit" name="action" value="New">
-            <a class="btn btn-primary" href="/admin/index">Go back</a>
+            <input type="submit" name="action" value="New">
+            <a class="btn btn-primary mt-3" href="/admin/index">Go back</a>
         </div>                
     </div>                                                              
 </form>
