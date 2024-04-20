@@ -1,11 +1,13 @@
 <?php
     declare(strict_types=1);
 
-    class IndexController
+    use model\classes\Controller;
+
+    class IndexController extends Controller
     {        
         public function index()
-        {
-            include(SITE_ROOT . "/../view/main_view.php");
+        {            
+            $this->render("/view/main_view.php", []);
         }
     }    
 ?>
