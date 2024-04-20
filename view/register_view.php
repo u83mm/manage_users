@@ -8,7 +8,7 @@
 ?>	
     <div class="col-10 col-md-6 mx-auto credentials">
         <h4>Sign Up</h4>
-        <?php echo $message = $error_msg ?? $success_msg ?? ""; ?>
+        <?php echo $message; ?>
         <form action="#" method="post">
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label d-none" for="user_name">User:</label>
