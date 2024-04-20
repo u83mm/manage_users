@@ -123,8 +123,7 @@
 
         /** Update user */
         public function update(): void
-        {
-            $user = [];
+        {            
             $validate = new Validate;
 
             try {
@@ -149,12 +148,17 @@
                 }
                 else {
                     $this->message = $validate->get_msg();
-                    include(SITE_ROOT . "/../view/admin/user_show_view.php");
+                    $this->render("/view/admin/user_show_view.php", [
+                        'message'   =>  $this->message,
+                        'user'      =>  $user
+                    ]);
                 }               
 
             } catch (\Throwable $th) {			
-                $error_msg = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
-                include(SITE_ROOT . "/../view/database_error.php");				
+                $this->message = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
+                $this->render("/view/database_error.php", [
+                    'message'   =>  $this->message
+                ]);				
             }
         }
 
