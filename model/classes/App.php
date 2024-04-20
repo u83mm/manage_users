@@ -3,7 +3,7 @@
 
     namespace model\classes;
 
-    class App 
+    class App extends Controller
     {
         public function __construct(
             private string $controllerNamePrefix = "",
@@ -61,17 +61,19 @@
                 call_user_func_array([$controller, $this->method], []);                        
         
             } catch (\Throwable $th) {
-                $error_msg = "<p class='alert alert-danger text-center'>Page not found</p>";
+                $message = "<p class='alert alert-danger text-center'>Page not found</p>";
         
                 if(isset($_SESSION['role']) && $_SESSION['role'] === 'ROLE_ADMIN') {
-                    $error_msg = "<p class='alert alert-danger text-center'>
+                    $message = "<p class='alert alert-danger text-center'>
                                     Message: {$th->getMessage()}<br>
                                     Path: {$th->getFile()}<br>
                                     Line: {$th->getLine()}
                                 </p>";
                 }
         
-                include(SITE_ROOT . "/../view/database_error.php");
+                $this->render("/view/database_error.php", [
+                    'message'   =>  $message
+                ]);
             }
         }
     }
