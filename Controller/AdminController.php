@@ -4,7 +4,9 @@
     use model\classes\AccessControl;
     use model\classes\Controller;
     use model\classes\Query;
-    use model\classes\Validate;
+use model\classes\User;
+use model\classes\Validate;
+use Repository\UserRepository;
 
     class AdminController extends Controller
     {
@@ -53,31 +55,27 @@
                 if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // Get values from the form
                     $this->fields = [
-                        'user_name' =>  $validate->test_input($_REQUEST['user_name']),                        
+                        'userName'  =>  $validate->test_input($_REQUEST['user_name']),                        
                         'password'	=>	$validate->test_input($_REQUEST['password']),
-                        'email'	    =>	$validate->test_input($_REQUEST['email'])
+                        'email'	    =>	$validate->test_input($_REQUEST['email']),
+                        'terms'		=>	isset($_REQUEST['terms']) ? $_REQUEST['terms'] : "checked"
                     ];
 
                     // Validate form
                     if($validate->validate_form($this->fields)) {
                         $query = new Query();
-                        $rows = $query->selectAllBy("user", "email", $this->fields['email'], $this->dbcon);
+                        $rows = $query->selectAllBy("user", "email", $this->fields['email']);
     
                         if ($rows) {
                             $this->message = "<p class='text-center error'>El email '{$this->fields['email']}' ya está registrado</p>";                            										
                         }
-                        else {
-                            $query = "INSERT INTO user (user_name, password, email, terms) VALUES (:name, :password, :email, 'checked')";                 
-        
-                            $stm = $this->dbcon->pdo->prepare($query); 
-                            $stm->bindValue(":name", $this->fields['user_name']);
-                            $stm->bindValue(":password", password_hash($this->fields['password'], PASSWORD_DEFAULT));
-                            $stm->bindValue(":email", $this->fields['email']);              
-                            $stm->execute();       				
-                            $stm->closeCursor();                        
-            
+                        else {                              
+                            $user = new User($this->fields);
+                            $userRepo = new UserRepository();
+                            $userRepo->save($user);
+                            
                             $this->message = "<p class='alert alert-success text-center'>El usuario se ha registrado correctamente</p>";
-                            $this->index();                            
+                            $this->index();                                                              
                         }                        	
                     }
                     else {
