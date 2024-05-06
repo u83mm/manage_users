@@ -9,12 +9,12 @@
             
         }
         
-        public function selectAllBy(string $table, string $field, string $value, object $dbcon): array  
+        public function selectAllBy(string $table, string $field, string $value): array  
         {
             $query = "SELECT * FROM $table WHERE $field = :val";                                    
 
             try {
-                $stm = $dbcon->pdo->prepare($query);
+                $stm = $this->dbcon->pdo->prepare($query);
                 $stm->bindValue(":val", $value);                            
                 $stm->execute();       
                 $rows = $stm->fetchAll(PDO::FETCH_ASSOC);
@@ -27,12 +27,12 @@
             }
         }
 
-        public function selectOneBy(string $table, string $field, string $value, object $dbcon): array  
+        public function selectOneBy(string $table, string $field, string $value): array  
         {
             $query = "SELECT * FROM $table WHERE $field = :val";                                     
 
             try {
-                $stm = $dbcon->pdo->prepare($query);
+                $stm = $this->dbcon->pdo->prepare($query);
                 $stm->bindValue(":val", $value);                            
                 $stm->execute();       
                 $rows = $stm->fetch(PDO::FETCH_ASSOC);
@@ -45,12 +45,12 @@
             }
         }
 
-        public function updateRegistry(string $table, string $user_name, string $email, string $id_user, object $dbcon)
+        public function updateRegistry(string $table, string $user_name, string $email, string $id_user)
         {
             $query = "UPDATE $table SET user_name = :user_name, email = :email WHERE id_user = :id_user";                 
                         
             try {
-                $stm = $dbcon->pdo->prepare($query); 
+                $stm = $this->dbcon->pdo->prepare($query); 
                 $stm->bindValue(":user_name", $user_name);				
                 $stm->bindValue(":email", $email);
                 $stm->bindValue(":id_user", $id_user);              
@@ -62,12 +62,12 @@
             }
         }
 
-        public function updatePassword(string $table, string $password, string $id_user, object $dbcon)
+        public function updatePassword(string $table, string $password, string $id_user)
         {
             $query = "UPDATE $table SET password = :password WHERE id_user = :id_user";                 
                         
             try {
-                $stm = $dbcon->pdo->prepare($query); 
+                $stm = $this->dbcon->pdo->prepare($query); 
                 $stm->bindValue(":password", password_hash($password, PASSWORD_DEFAULT));				            
                 $stm->bindValue(":id_user", $id_user);              
                 $stm->execute();       				
@@ -78,12 +78,12 @@
             }
         }
 
-        public function deleteRegistry(string $table, string $id_user, object $dbcon)
+        public function deleteRegistry(string $table, string $id_user)
         {
             $query = "DELETE FROM $table WHERE id_user = :id_user";                             
             
             try {
-                $stm = $dbcon->pdo->prepare($query);             			            
+                $stm = $this->dbcon->pdo->prepare($query);             			            
                 $stm->bindValue(":id_user", $id_user);              
                 $stm->execute();       				
                 $stm->closeCursor();

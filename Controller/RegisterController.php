@@ -38,7 +38,7 @@
 					if($validate->validate_form($this->fields)) {
 						$query = new Query();
 
-						$rows = $query->selectAllBy("user", "email", $this->fields['email'], $this->dbcon);
+						$rows = $query->selectAllBy("user", "email", $this->fields['email']);
 	
 						if($this->fields['password'] !== $this->fields['repeat_password']) { // compare passwords
 							$this->message = "<p class='error text-center'>Passwords don't match</p>";
