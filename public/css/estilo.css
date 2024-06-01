@@ -119,7 +119,7 @@ header {
 	background: lightgray;
 }
 
-input[type="button"], [type="text"], [type="number"], [type="submit"] {
+input[type="button"], [type="number"], [type="submit"] {
 	padding: 0.5em;
 }
 

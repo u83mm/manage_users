@@ -19,7 +19,10 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-md-3 col-form-label d-none" for="password">Password:</label>
                 <div class="col-sm-8 mx-auto">
-                    <input class="form-control" type="password" name="password" id="password" value="<?php if(isset($fields['password'])) echo $fields['password']; ?>" placeholder="Password" required>
+                    <div class="col-10 float-start">
+                        <input class="form-control password" type="password" name="password" id="password" value="<?php if(isset($fields['password'])) echo $fields['password']; ?>" placeholder="Password" required>
+                    </div>                    
+                    <label class="d-inline-block col-1 ms-2 me-2 show_password" for="password"><img src="/images/eye.png" alt="eye" height="40"></label>
                 </div>                
             </div>                          
             <div class="row mb-3">                               
