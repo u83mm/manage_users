@@ -4,6 +4,8 @@
 	use model\classes\Controller;
 	use model\classes\Query;
 	use model\classes\Validate;
+use model\User;
+use Repository\UserRepository;
 
     /**
      * register a new user in the database. 
@@ -28,12 +30,12 @@
 			try {
 				if($_SERVER['REQUEST_METHOD'] === 'POST') {	
 					$this->fields = [
-						'user_name'		  => $validate->test_input($_REQUEST['user_name']),
+						'username'		  => $validate->test_input($_REQUEST['user_name']),
 						'password'		  => $validate->test_input($_REQUEST['password']),
 						'repeat_password' => $validate->test_input($_REQUEST['repeat_password']),
 						'email'			  => $validate->test_input($_REQUEST['email']),
 						'terms'			  => isset($_REQUEST['terms']) ? $validate->test_input($_REQUEST['terms']) : ""
-					];
+					];					
 					
 					if($validate->validate_form($this->fields)) {
 						$query = new Query();
@@ -48,8 +50,10 @@
 						}
 						else {
 							// save data
-							unset($this->fields['repeat_password']);													
-							$query->insertInto('user', $this->fields);
+							unset($this->fields['repeat_password']);						
+							$user = new User($this->fields);							
+							$userRepository = new UserRepository();	
+							$userRepository->save($user);																			
 			
 							$this->message = "<p class='alert alert-success text-center'>El usuario se ha registrado correctamente</p>";							
 							$this->render("/view/database_error.php", ['message' => $this->message]);							
@@ -69,7 +73,9 @@
 				$error_msg = "<p>Hay problemas al conectar con la base de datos, revise la configuración 
 						de acceso.</p><p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
 				
-				$this->render("/view/database_error.php", []);				
+				$this->render("/view/database_error.php", [
+					'message'	=>	$error_msg
+				]);				
 			}
         }
     }    
