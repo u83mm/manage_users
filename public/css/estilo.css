@@ -215,13 +215,17 @@ select {
 	font-size: 0.7em;
 }
 
-img {
+/* img {
 	max-width: 100%;
 	max-height: 100%;
-}
+} */
 
 .center {
 	align-self: center;
+}
+
+.show_password {
+	cursor: pointer;
 }
 
 /***************** Configuración para móviles **********************/

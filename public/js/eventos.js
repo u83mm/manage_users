@@ -34,4 +34,22 @@ window.onload = function() {
 	/** Event to 'change password visibility' */
 	let visibilityButton = document.querySelectorAll('.show_password');
 	if(visibilityButton.length > 0) visibilityButton.forEach(button => button.addEventListener('click', showPassword));
+
+	/** Event to 'change password visibility' */	
+	let showPasswordChars = document.querySelectorAll('.show_password');
+
+	if(showPasswordChars.length > 0) {
+		showPasswordChars.forEach(showPasswordChar => {
+			showPasswordChar.addEventListener('click', () => {				
+				let input = showPasswordChar.parentNode.previousElementSibling.querySelector('input');
+				if(input.type == 'password') {
+					input.type = 'text';
+					showPasswordChar.src = '/images/eye_closed.svg';
+				} else {
+					input.type = 'password';
+					showPasswordChar.src = '/images/eye.svg';
+				}
+			});
+		});
+	}
 }
