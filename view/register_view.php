@@ -19,10 +19,10 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label d-none" for="password">Password:</label>
                 <div class="col-sm-8 mx-auto d-flex">
-                    <div class="col-10 float-start">
+                    <div class="col-10 me-1">
                         <input class="form-control password" type="password" name="password" id="password" value="<?php if(isset($fields['password'])) echo $fields['password']; ?>" placeholder="Password" required>
                     </div>                    
-                    <div class="col-1 col-md-1 d-flex justify-content-center align-items-center ps-0">
+                    <div class="col-1 col-md-1 d-flex justify-content-center align-items-center">
                         <img class="show_password p-0" src="/images/eye.svg" alt="eye" height="20">
                     </div>
                 </div>                
@@ -30,10 +30,10 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label d-none" for="repeat_password">Repeat Password:</label>
                 <div class="col-sm-8 mx-auto d-flex">
-                    <div class="col-10 float-start">
+                    <div class="col-10 me-1">
                         <input class="form-control password" type="password" name="repeat_password" id="repeat_password" value="<?php if(isset($fields['repeat_password'])) echo $fields['repeat_password']; ?>" placeholder="Repeat Password" required>
                     </div>                    
-                    <div class="col-1 col-md-1 d-flex justify-content-center align-items-center ps-0">
+                    <div class="col-1 col-md-1 d-flex justify-content-center align-items-center">
                         <img class="show_password p-0" src="/images/eye.svg" alt="eye" height="20">
                     </div> 
                 </div>                

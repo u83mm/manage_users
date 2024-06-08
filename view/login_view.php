@@ -18,11 +18,13 @@
             </div> 
             <div class="row mb-3">
                 <label class="col-sm-2 col-md-3 col-form-label d-none" for="password">Password:</label>
-                <div class="col-sm-8 mx-auto">
-                    <div class="col-10 float-start">
+                <div class="col-sm-8 mx-auto d-flex">
+                    <div class="col-10 me-1">
                         <input class="form-control password" type="password" name="password" id="password" value="<?php if(isset($fields['password'])) echo $fields['password']; ?>" placeholder="Password" required>
                     </div>                    
-                    <label class="d-inline-block col-1 ms-2 me-2 show_password" for="password"><img src="/images/eye.png" alt="eye" height="40"></label>
+                    <div class="col-1 col-md-1 d-flex justify-content-center align-items-center">
+                        <img class="show_password p-0" src="/images/eye.svg" alt="eye" height="20">
+                    </div>
                 </div>                
             </div>                          
             <div class="row mb-3">                               
