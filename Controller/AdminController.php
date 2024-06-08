@@ -170,11 +170,11 @@
                 /** Test access */
                 if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
 
-                $userPassword = $query->selectFieldsFromTableById(["password"], "user", "id_user", $id);                                 
+                $userPassword = $query->selectFieldsFromTableById(["password"], "user", "id_user", $id);                                                 
 
                 $this->fields = [
-                    'password'  =>  $userPassword,                                        
-                ];
+                    'password'  =>  $userPassword['password'],                                        
+                ];                
 
                 if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $this->fields = [
