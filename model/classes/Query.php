@@ -167,6 +167,36 @@
                 throw new \Exception("{$th->getMessage()}", 1);             
             }
         }
-    }
-    
+
+        /**
+        * The function `selectFieldsFromTableById` retrieves specific fields from a table based on a
+        * given ID value.
+        * 
+        * @param array fields An array of field names that you want to select from the table.
+        * @param string table The `table` parameter 
+        * @param string id The id field in the table (ex. user_id).
+        * @param string value The id value.
+        * 
+        * @return array An array containing the selected fields from the specified table where the
+        * provided ID matches the given value.
+        */
+        public function selectFieldsFromTableById(array $fields, string $table, string $fieldId, string $value): array
+        {
+            $fields = implode(", ", $fields);
+            $query = "SELECT $fields FROM $table WHERE $fieldId = :value";
+
+            try {
+                $stm = $this->dbcon->pdo->prepare($query);
+                $stm->bindValue(":value", $value);                                                   
+                $stm->execute();       
+                $rows = $stm->fetch(PDO::FETCH_ASSOC);
+                $stm->closeCursor();
+            
+                return $rows;
+
+            } catch (\Throwable $th) {
+                throw new \Exception("{$th->getMessage()}");
+            }
+        }
+    }        
 ?>
