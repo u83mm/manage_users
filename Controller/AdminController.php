@@ -4,9 +4,9 @@
     use model\classes\AccessControl;
     use model\classes\Controller;
     use model\classes\Query;
-use model\classes\User;
-use model\classes\Validate;
-use Repository\UserRepository;
+    use model\User;
+    use model\classes\Validate;
+    use Repository\UserRepository;
 
     class AdminController extends Controller
     {
@@ -161,47 +161,54 @@ use Repository\UserRepository;
         }
 
         /** Change user password */
-        public function changePassword(): void
+        public function changePassword(string $id = ""): void
         {            
-            $validate = new Validate();	            
+            $validate = new Validate();
+            $query = new Query();	            
 
             try {
                 /** Test access */
                 if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
 
+                $userPassword = $query->selectFieldsFromTableById(["password"], "user", "id_user", $id);                                 
+
+                $this->fields = [
+                    'password'  =>  $userPassword,                                        
+                ];
+
                 if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $this->fields = [
                         'password'      =>  $validate->test_input($_REQUEST['password']),
-                        'id_user'       =>  $validate->test_input($_REQUEST['id_user']),
+                        'id_user'       =>  $id,
                         'new_password'  =>  isset($_REQUEST['new_password']) ? $validate->test_input($_REQUEST['new_password']) : ""
-                    ];
-                }
+                    ];                    
 
-                if($validate->validate_form($this->fields)) {
-                    if ($this->fields['password'] !== $this->fields['new_password']) {
-                        $this->message = "<p class='alert alert-danger text-center'>Passwords don't match</p>";
-                    } else {
-                        $query = new Query();
-                        $query->updatePassword("user", $this->fields['new_password'], $this->fields['id_user'], $this->dbcon);
-
-                        $this->message = "<p class='alert alert-success text-center'>Password updated</p>";
+                    if($validate->validate_form($this->fields)) {
+                        if ($this->fields['password'] !== $this->fields['new_password']) {
+                            $this->message = "<p class='alert alert-danger text-center'>Passwords don't match</p>";
+                        } else {                            
+                            $query->updatePassword("user", $this->fields['new_password'], $this->fields['id_user'], $this->dbcon);
+    
+                            $this->message = "<p class='alert alert-success text-center'>Password updated</p>";
+                        }
                     }
-                }
-                else {
-                    $this->message = "<p class='alert alert-danger text-center'>You can't let empty fields</p>";
+                    else {
+                        $this->message = "<p class='alert alert-danger text-center'>You can't let empty fields</p>";
+                    } 
                 }                
+                
+                $this->render("/view/admin/user_change_password.php", [
+                    'fields'    =>  $this->fields,
+                    'message'   =>  $this->message
+                ]);
 
             } catch (\Throwable $th) {
                 $this->message = "<p>Descripción del error: <span class='error'>{$th->getMessage()}</span></p>";
+
                 $this->render("/view/database_error.php", [
                     'message'   =>  $this->message
                 ]);
-            }
-
-            $this->render("/view/admin/user_change_password.php", [
-                'fields'    =>  $this->fields,
-                'message'   =>  $this->message
-            ]);
+            }            
         }
 
         /** Deleting a user from the database. */
