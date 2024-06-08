@@ -34,8 +34,9 @@
             </div>               
             <div class="row mb-3">                
                 <div class="col-sm-8 mx-auto">
-                    <input class="mb-2" type="submit" name="action" value="Update">
-                    <input id="change_passwd" type="submit" value="Change Password">
+                    <input class="mb-2" type="submit" name="action" value="Update">                    
+                    <a class="button" href="/admin/changePassword/<?php echo $user['id_user']; ?>">Change password</a>
+                    <a class="btn btn-primary mt-3" href="/admin/index">Go back</a>
                 </div>                
             </div>                                                              
         </form>

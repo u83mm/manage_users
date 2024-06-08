@@ -207,6 +207,23 @@ select {
 	width: 80%;
 }
 
+.button {
+	width: 80%;
+	display: block;
+	border-radius: 1.5em;
+	border: 1px solid gray;
+	padding: 0.5em;
+	font-size: initial;
+	color: black;
+	margin: 0 auto;
+	background: rgb(233, 233, 237);
+}
+
+.button:hover {
+	background: rgb(216, 217, 223);
+	color: black;	
+}
+
 .credentials form {
 	margin-top: 0
 }
