@@ -56,13 +56,13 @@
                 $this->controllerName = $this->controllerNamePrefix . "Controller";                        
                
                 $file_name = $this->controllerRoute . $this->controllerName . ".php";
+                $params = isset($id) ? ['id' => $id] : [];
                 
                 if(file_exists($file_name)) {
                     require_once($file_name);
 
                     $controller = new $this->controllerName;                  
-                    call_user_func_array([$controller, $this->method], []);
-
+                    call_user_func_array([$controller, $this->method], $params);
                 } 
                 else {                    
                     throw new \Exception("Page not found");
