@@ -33,6 +33,7 @@
                 <label class="col-sm-4" for="nome">&nbsp;</label>
                 <div class="col-sm-6">
                     <input type="submit" name="action" value="Change Password">
+                    <a class="btn btn-primary mt-3" href="/admin/show/<?php if(isset($fields['id_user'])) echo $fields['id_user']; ?>">Go back</a>
                 </div>                
             </div>                                                              
         </form>

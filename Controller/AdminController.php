@@ -96,9 +96,9 @@
             }			
         }
 
-        public function show(): void
+        public function show(string $id = ""): void
         {
-            $id_user = $_REQUEST['id_user'] ?? "";	
+            $id_user = $_REQUEST['id_user'] ?? $id;	
             $query = new Query();
 
             try {
@@ -108,7 +108,7 @@
                 $user = $query->selectOneBy("user", "id_user", $id_user, $this->dbcon);
 
                 $this->render("/view/admin/user_show_view.php", [                    
-                    'user'      =>  $user
+                    'user' =>  $user
                 ]);
                 
             } catch (\Throwable $th) {
@@ -173,7 +173,8 @@
                 $userPassword = $query->selectFieldsFromTableById(["password"], "user", "id_user", $id);                                                 
 
                 $this->fields = [
-                    'password'  =>  $userPassword['password'],                                        
+                    'password'  =>  $userPassword['password'],  
+                    'id_user'   =>  $id,                                      
                 ];                
 
                 if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -181,7 +182,7 @@
                         'password'      =>  $validate->test_input($_REQUEST['password']),
                         'id_user'       =>  $id,
                         'new_password'  =>  isset($_REQUEST['new_password']) ? $validate->test_input($_REQUEST['new_password']) : ""
-                    ];                    
+                    ];                                           
 
                     if($validate->validate_form($this->fields)) {
                         if ($this->fields['password'] !== $this->fields['new_password']) {
