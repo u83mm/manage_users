@@ -131,8 +131,7 @@
                 if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $user = [
                         'user_name' =>  $validate->test_input($_REQUEST['user_name']),
-                        'id_user'   =>  $validate->test_input($_REQUEST['id_user']),
-                        'password'  =>  "**************************",
+                        'id_user'   =>  $validate->test_input($_REQUEST['id_user']),                        
                         'email'     =>  $validate->test_input($_REQUEST['email'])
                     ];
                 }
