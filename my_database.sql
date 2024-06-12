@@ -16,6 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `limit_access`
+--
+
+DROP TABLE IF EXISTS `limit_access`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `limit_access` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(15) NOT NULL,
+  `restriction_time` int(11) NOT NULL,
+  `failed_tries` smallint(6) NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ip` (`ip`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `limit_access`
+--
+
+LOCK TABLES `limit_access` WRITE;
+/*!40000 ALTER TABLE `limit_access` DISABLE KEYS */;
+/*!40000 ALTER TABLE `limit_access` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `roles`
 --
 
@@ -49,14 +76,14 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `id_role` int(11) NOT NULL DEFAULT 2,
   `terms` varchar(25) NOT NULL,
   `create_at` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`id_user`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   KEY `fk_user_role` (`id_role`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -73,14 +100,14 @@ INSERT INTO `user` VALUES
 (2,'pnusche1','kn4dZSZy','oalten1@timesonline.co.uk',2,'checked','2024-04-14 18:25:17'),
 (3,'rjob2','$2y$10$urz15Zw2iYSm84HKXJbSdu6FF2jUo3B7TyfOZ1wUa9/UDLLJ5aLAO','hkoschke2@columbia.edu',2,'checked','2024-04-14 18:25:17'),
 (4,'gbeckhurst3','hli11TCLLy5W','cmcelory3@desdev.cn',2,'checked','2024-04-14 18:25:17'),
-(5,'cvain4','kmSK2dW1x','pmcmillan4@skype.com',2,'checked','2024-04-14 18:25:17'),
+(5,'cvain4','$2y$10$Mh6IJtbcfbQ.TtJBMbAgXuEX3EzNMb5hk9TShYh/zqNJUsap1dUoG','pmcmillan4@skype.com',2,'checked','2024-04-14 18:25:17'),
 (6,'csteddall5','rRaBKnY14Ke','afussen5@t.co',2,'checked','2024-04-14 18:25:17'),
 (7,'isopper6','cjphThcO','mhaylett6@symantec.com',2,'checked','2024-04-14 18:25:17'),
 (8,'bmoore7','iVE8hSSvOaKw','bwoolforde7@joomla.org',2,'checked','2024-04-14 18:25:17'),
-(9,'lpostgate8','s7hUPoCRjkiI','wallbut8@infoseek.co.jp',2,'checked','2024-04-14 18:25:17'),
+(9,'lpostgate8','$2y$10$nB17vsUwK7ua/.7/.7S0Ru7z6MASf4U/107/btA./gehPcjYnF.Se','wallbut8@infoseek.co.jp',2,'checked','2024-04-14 18:25:17'),
 (10,'fhansed9','saV7FmEJq','bbartke9@gnu.org',2,'checked','2024-04-14 18:25:17'),
 (11,'admin','$2y$10$UmlPg2q.E8FyQ/y8/zkcgu/OXaar1erO8gEldBqGI5BtB3vElwReq','admin@admin.com',1,'checked','2024-04-14 18:25:17'),
-(12,'pepe','$2y$10$o6boSNPz0e2bd53A5fK8Ruff9C3n9hUkOIINtwuEh4t06eGSEcpEK','pepe@pepe.com',2,'checked','2024-04-14 18:25:17');
+(12,'pepe','$2y$10$pguzOr3F5.CcyuAWY3RoBeHm1CdAarDfA6/gIxNhe1T2/YimQSmJW','pepe@pepe.com',2,'checked','2024-04-14 18:25:17');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -93,4 +120,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-14 18:51:53
+-- Dump completed on 2024-06-12 23:08:51
