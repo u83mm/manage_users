@@ -2,6 +2,7 @@
     declare(strict_types=1);
 
 	use model\classes\Controller;
+	use model\classes\Query;
 	use model\classes\Validate;
 
     /**
@@ -12,7 +13,9 @@
         public function __construct(
 			private object $dbcon = DB_CON,
 			private string $message = "",
-			private array $fields = []
+			private array $fields = [],
+			private array $limited_access_data = [],
+			private int $remaining_time = 0
 		)
         {
             
@@ -26,31 +29,29 @@
         the login form. */
         public function index(): void
         {			
-            // Define variables						
-			$validate = new Validate;														
+            // Define objects						
+			$validate 		= new Validate;
+			$query_object 	= new Query();														
 			
 			try {
-				if(!isset($_SESSION['id_user'])) {					
-					$_SESSION['access_restriction_time'] = !isset($_SESSION['access_restriction_time']) ? 0 : $_SESSION['access_restriction_time'];
+				if(!isset($_SESSION['id_user'])) {										
+					// Test for restrictions
+					$this->limited_access_data = $query_object->selectOneBy("limit_access", "ip", $_SERVER['REMOTE_ADDR']);						
 
+					// If the IP is restricted, return the remaining time
+					if(count($this->limited_access_data) > 0) {						
+						if($this->limited_access_data['failed_tries'] >= 3) $this->remaining_time = $this->limited_access_data['restriction_time'] - time();
+					}						
+					
 					if($_SERVER['REQUEST_METHOD'] == 'POST') {	
 						// Get values from the form
 						$this->fields = [
 							'email'		=>	$validate->test_input($_REQUEST['email']),
 							'password'	=>	$validate->test_input($_REQUEST['password'])
-						];															
-					
-						// Check if a restriction time is already set
-						if(isset($_SESSION['access_try']) && $_SESSION['access_try'] >= 3) {
-							// Set the restriction time to 5 minutes from now
-							$_SESSION['access_restriction_time'] = time() + (5 * 60); // 5 minutes in seconds
-						}						
-
-						// Calculate the remaining time
-						$remainingTime = $_SESSION['access_restriction_time'] ? $_SESSION['access_restriction_time'] - time() : 0;						
+						];																																																		
 
 						// Try to login
-						if ($remainingTime <= 0) {																							
+						if ($this->remaining_time <= 0) {																							
 							if($validate->validate_form($this->fields)) {											
 								$query = "SELECT * FROM user INNER JOIN roles USING(id_role) WHERE email = :val";
 		
@@ -64,35 +65,58 @@
 									
 									// Testing passwords
 									if(password_verify($this->fields['password'], $result['password'])) {												
-										$_SESSION['id_user'] = $result['id_user'];						
+										$_SESSION['id_user'] = $result['id'];						
 										$_SESSION['user_name'] = $result['user_name'];
 										$_SESSION['role'] = $result['role'];																				
-										$stm->closeCursor();
-																		
-										header("Location: /");							
+										$stm->closeCursor();										
+										
+										// Delete the restriction time
+										if(isset($this->limited_access_data['id'])) $query_object->deleteRegistry("limit_access", $this->limited_access_data['id']);										
+
+										// Redirect to home
+										header("Location: /");																	
 									}
-									else {
-										$_SESSION['access_try'] = isset($_SESSION['access_try']) ? $_SESSION['access_try'] += 1 : 1;
-										if($_SESSION['access_try'] >= 3) $_SESSION['access_restriction_time'] = time() + (5 * 60 );
-										$this->message = "<p class='text-center error'>Bad credentials</p>";								
+									else {																				
+										$this->message = "<p class='text-center error'>Bad credentials</p>";																																																																																										
 									}			
 								}
-								else {
-									isset($_SESSION['access_try']) ? $_SESSION['access_try'] ++ : 0;	
+								else {									
 									$this->message = "<p class='text-center error'>Bad credentials</p>";																							
-								}								
+								}
+								
+								// Search if there is a restriction time
+								if(isset($this->limited_access_data['id'])) {																																										
+									// Update the restriction time										
+									$this->limited_access_data['failed_tries'] += 1;
+									$this->limited_access_data['restriction_time'] = time() + (5 * 60 );											
+									$query_object->updateRow("limit_access", $this->limited_access_data, $this->limited_access_data['id']);
+								}
+								else {
+									$this->limited_access_data['failed_tries'] = 1;
+
+									// Insert into table limit_access
+									$data = [
+										'ip' => $_SERVER['REMOTE_ADDR'],
+										'restriction_time' => time() + (5 * 60),
+										'failed_tries' => $this->limited_access_data['failed_tries'],
+										'created_at' => date('Y-m-d H:i:s')
+									];
+
+									if($validate->validate_form($data)) {											
+										$query_object->insertInto("limit_access", $data);
+									}
+								}
 							}
-							else {
-								isset($_SESSION['access_try']) ? $_SESSION['access_try'] ++ : 0;
+							else {								
 								$this->message = $validate->get_msg();
 							}
 						}
 						else {
-							$_SESSION['access_try'] = 0;							
+							$this->limited_access_data['failed_tries'] = 0;
 
 							// Display message with remaining time (formatted)
-							$minutes = floor($remainingTime / 60);
-							$seconds = $remainingTime % 60;
+							$minutes = floor($this->remaining_time / 60);
+							$seconds = $this->remaining_time % 60;
 							
 							$this->message = "<p class='alert alert-danger text-center'>Please wait for " . $minutes . " minutes and " . $seconds . " seconds before trying again.</p>";							
 						}																							
