@@ -38,7 +38,7 @@
                 $rows = $stm->fetch(PDO::FETCH_ASSOC);
                 $stm->closeCursor();
 
-                return $rows;
+                return $rows ? $rows : [];
 
             } catch (\Throwable $th) {
                 throw new \Exception("{$th->getMessage()}", 1);
@@ -47,7 +47,7 @@
 
         public function updateRegistry(string $table, string $user_name, string $email, string $id_user)
         {
-            $query = "UPDATE $table SET user_name = :user_name, email = :email WHERE id_user = :id_user";                 
+            $query = "UPDATE $table SET user_name = :user_name, email = :email WHERE id = :id_user";                 
                         
             try {
                 $stm = $this->dbcon->pdo->prepare($query); 
@@ -64,7 +64,7 @@
 
         public function updatePassword(string $table, string $password, string $id_user)
         {
-            $query = "UPDATE $table SET password = :password WHERE id_user = :id_user";                 
+            $query = "UPDATE $table SET password = :password WHERE id = :id_user";                 
                         
             try {
                 $stm = $this->dbcon->pdo->prepare($query); 
@@ -78,13 +78,13 @@
             }
         }
 
-        public function deleteRegistry(string $table, string $id_user)
+        public function deleteRegistry(string $table, string|int $id)
         {
-            $query = "DELETE FROM $table WHERE id_user = :id_user";                             
+            $query = "DELETE FROM $table WHERE id = :id";                             
             
             try {
                 $stm = $this->dbcon->pdo->prepare($query);             			            
-                $stm->bindValue(":id_user", $id_user);              
+                $stm->bindValue(":id", $id);              
                 $stm->execute();       				
                 $stm->closeCursor();
 
@@ -196,6 +196,42 @@
 
             } catch (\Throwable $th) {
                 throw new \Exception("{$th->getMessage()}");
+            }
+        }       
+
+        public function updateRow(string $table, array|object $fields, string|int $id): void
+        {
+            /** Initialice variables */
+            $query = "";
+            $count = 0;
+            $query = "UPDATE $table SET ";            
+
+            foreach ($fields as $key => $value) {
+                if(++$count === count($fields)) {
+                    $query .= $key . " = :" . $key;
+                } else {
+                    $query .= $key . " = :" . $key . ", ";
+                }                
+            }
+            
+            $query .= " WHERE id = '$id'";            
+                                                    
+            try {
+                $stm = $this->dbcon->pdo->prepare($query);
+                foreach ($fields as $key => $value) {
+                    if($key === 'password') {
+                        $stm->bindValue(":password", password_hash($value, PASSWORD_DEFAULT));
+                        continue;
+                    }
+                    
+                    $stm->bindValue(":$key", $value);
+                } 
+                                
+                $stm->execute();       				
+                $stm->closeCursor();
+                
+            } catch (\Throwable $th) {
+                throw new \Exception("{$th->getMessage()}", 1);             
             }
         }
     }        

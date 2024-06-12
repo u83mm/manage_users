@@ -10,7 +10,7 @@
         <h4>CHANGE PASSWORD</h4>
         <?php echo $message ?? ""; ?>
         <form action="<?php PATH ?>" method="post"> 
-            <input type="hidden" name="id_user" value="<?php if(isset($fields['id_user'])) echo $fields['id_user']; ?>">           
+            <input type="hidden" name="id_user" value="<?php if(isset($fields['id'])) echo $fields['id']; ?>">           
             <div class="row mb-3">
                 <label class="col-sm-4 col-form-label" for="password">Password:</label>
                 <div class="col-10 col-sm-6">
@@ -33,7 +33,7 @@
                 <label class="col-sm-4" for="nome">&nbsp;</label>
                 <div class="col-sm-6">
                     <input type="submit" name="action" value="Change Password">
-                    <a class="btn btn-primary mt-3" href="/admin/show/<?php if(isset($fields['id_user'])) echo $fields['id_user']; ?>">Go back</a>
+                    <a class="btn btn-primary mt-3" href="/admin/show/<?php if(isset($fields['id'])) echo $fields['id']; ?>">Go back</a>
                 </div>                
             </div>                                                              
         </form>

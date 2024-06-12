@@ -105,7 +105,7 @@
                 /** Test access */
                 if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
 
-                $user = $query->selectOneBy("user", "id_user", $id_user, $this->dbcon);
+                $user = $query->selectOneBy("user", "id", $id_user, $this->dbcon);
 
                 $this->render("/view/admin/user_show_view.php", [                    
                     'user' =>  $user
@@ -131,14 +131,14 @@
                 if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $user = [
                         'user_name' =>  $validate->test_input($_REQUEST['user_name']),
-                        'id_user'   =>  $validate->test_input($_REQUEST['id_user']),                        
+                        'id'        =>  $validate->test_input($_REQUEST['id_user']),                        
                         'email'     =>  $validate->test_input($_REQUEST['email'])
                     ];
                 }
 
                 if($validate->validate_form($user)) {
                     $query = new Query();
-                    $query->updateRegistry("user", $user['user_name'], $user['email'], $user['id_user'], $this->dbcon);
+                    $query->updateRegistry("user", $user['user_name'], $user['email'], $user['id']);
     
                     $this->message = "<p class='alert alert-success text-center'>User updated successfully</p>";
                     $this->index();
@@ -169,25 +169,25 @@
                 /** Test access */
                 if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
 
-                $userPassword = $query->selectFieldsFromTableById(["password"], "user", "id_user", $id);                                                 
+                $userPassword = $query->selectFieldsFromTableById(["password"], "user", "id", $id);                                                                 
 
                 $this->fields = [
                     'password'  =>  $userPassword['password'],  
-                    'id_user'   =>  $id,                                      
-                ];                
+                    'id'        =>  $id,                                      
+                ];              
 
                 if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $this->fields = [
                         'password'      =>  $validate->test_input($_REQUEST['password']),
-                        'id_user'       =>  $id,
+                        'id'            =>  $id,
                         'new_password'  =>  isset($_REQUEST['new_password']) ? $validate->test_input($_REQUEST['new_password']) : ""
-                    ];                                           
+                    ];                                         
 
                     if($validate->validate_form($this->fields)) {
                         if ($this->fields['password'] !== $this->fields['new_password']) {
                             $this->message = "<p class='alert alert-danger text-center'>Passwords don't match</p>";
                         } else {                            
-                            $query->updatePassword("user", $this->fields['new_password'], $this->fields['id_user'], $this->dbcon);
+                            $query->updatePassword("user", $this->fields['new_password'], $this->fields['id']);
     
                             $this->message = "<p class='alert alert-success text-center'>Password updated</p>";
                         }

@@ -10,7 +10,7 @@
         <h4>SHOW USER</h4>
         <?php echo $message ?? ""; ?>
         <form id="admin_form" action="/admin/update" method="post">
-            <input type="hidden" name="id_user" value="<?php echo $user['id_user']?>">
+            <input type="hidden" name="id_user" value="<?php echo $user['id']?>">
             <div class="row mb-3">
                 <label class="col-12 col-sm-3 col-form-label text-sm-end" for="user_name">User:</label>
                 <div class="col-sm-8">
@@ -35,7 +35,7 @@
             <div class="row mb-3">                
                 <div class="col-sm-8 mx-auto">
                     <input class="mb-2" type="submit" name="action" value="Update">                    
-                    <a class="button" href="/admin/changePassword/<?php echo $user['id_user']; ?>">Change password</a>
+                    <a class="button" href="/admin/changePassword/<?php echo $user['id']; ?>">Change password</a>
                     <a class="btn btn-primary mt-3" href="/admin/index">Go back</a>
                 </div>                
             </div>                                                              
