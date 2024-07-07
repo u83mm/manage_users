@@ -26,7 +26,14 @@
                         <img class="show_password p-0" src="/images/eye.svg" alt="eye" height="20">
                     </div>
                 </div>                
-            </div>                          
+            </div>
+            <div class="row mb-3">
+                <label class="col-12 text-center col-form-label" for="strength">Strength Password:</label>
+                <div id="strength" class="col-12 strength">                                        
+                    <div class="strength_bar" id="strength_bar"></div>                                    
+                </div>
+                <p class="message" id="message"></p>
+            </div>                           
             <div class="row mb-3">                               
                 <div class="col-sm-8 mx-auto">
                     <a class="col-12 d-inline-block mb-3" href="#">Forgot password?</a>
@@ -37,7 +44,8 @@
                 </div>               
             </div>                                                              
         </form>
-    </div>    
+    </div>
+    <script src="/js/passwd_test_strength.js"></script>   
 <?php
 	$page->do_html_footer();
 ?>
