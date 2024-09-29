@@ -1,6 +1,8 @@
 <?php
     declare(strict_types=1);
 
+    namespace controller;
+
     use model\classes\Controller;
 
     class IndexController extends Controller

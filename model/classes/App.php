@@ -58,10 +58,11 @@
                 $file_name = $this->controllerRoute . $this->controllerName . ".php";
                 $params = isset($id) ? ['id' => $id] : [];
                 
-                if(file_exists($file_name)) {
-                    require_once($file_name);
+                if(file_exists($file_name)) {                    
+                    $controller_path = str_replace(['/var/www/public/..', '.php'], '', $file_name);
+                    $controller_path = str_replace('/', '\\', $controller_path);
 
-                    $controller = new $this->controllerName;                  
+                    $controller = new $controller_path();                  
                     call_user_func_array([$controller, $this->method], $params);
                 } 
                 else {                    

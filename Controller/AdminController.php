@@ -1,6 +1,8 @@
 <?php
     declare(strict_types=1);
 
+    namespace controller;
+
     use model\classes\AccessControl;
     use model\classes\Controller;
     use model\classes\Query;
@@ -26,7 +28,7 @@
         {
             try {
                 /** Test access */
-                if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
+                if(!$this->testAccess(['ROLE_ADMIN'])) throw new \Exception("You must be admin to access.", 1);
                 
                 $query = new Query();
                 $rows = $query->selectAllInnerjoinByField('user', 'roles', 'id_role');				                             
@@ -50,7 +52,7 @@
 
             try {
                 // Test access
-                if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
+                if(!$this->testAccess(['ROLE_ADMIN'])) throw new \Exception("You must be admin to access.", 1);
                 
                 if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // Get values from the form
@@ -103,7 +105,7 @@
 
             try {
                 /** Test access */
-                if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
+                if(!$this->testAccess(['ROLE_ADMIN'])) throw new \Exception("You must be admin to access.", 1);
 
                 $user = $query->selectOneBy("user", "id", $id_user, $this->dbcon);
 
@@ -126,7 +128,7 @@
 
             try {
                 /** Test access */
-                if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
+                if(!$this->testAccess(['ROLE_ADMIN'])) throw new \Exception("You must be admin to access.", 1);
 
                 if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $user = [
@@ -167,7 +169,7 @@
 
             try {
                 /** Test access */
-                if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
+                if(!$this->testAccess(['ROLE_ADMIN'])) throw new \Exception("You must be admin to access.", 1);
 
                 $userPassword = $query->selectFieldsFromTableById(["password"], "user", "id", $id);                                                                 
 
@@ -218,7 +220,7 @@
 	
             try {
                 /** Test access */
-                if(!$this->testAccess(['ROLE_ADMIN'])) throw new Exception("You must be admin to access.", 1);
+                if(!$this->testAccess(['ROLE_ADMIN'])) throw new \Exception("You must be admin to access.", 1);
 
                 $query = new Query();
                 $query->deleteRegistry("user", $id_user, $this->dbcon);
