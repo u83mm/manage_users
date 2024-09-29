@@ -1,11 +1,13 @@
 <?php
     declare(strict_types=1);
 
+	namespace controller;
+
 	use model\classes\Controller;
 	use model\classes\Query;
 	use model\classes\Validate;
-use model\User;
-use Repository\UserRepository;
+	use model\User;
+	use Repository\UserRepository;
 
     /**
      * register a new user in the database. 

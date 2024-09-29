@@ -1,9 +1,12 @@
 <?php
     declare(strict_types=1);
 
+	namespace controller;
+
 	use model\classes\Controller;
 	use model\classes\Query;
 	use model\classes\Validate;
+use PDO;
 
     /**
      * A class that contains the methods to login and logout. 

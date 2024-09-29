@@ -22,6 +22,9 @@ RUN chown www-data:www-data -R /var/www/public
 # Install system dependencies
 RUN apt-get update && apt-get install -y git unzip
 
+# Install Xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
 # Install PHP extensions Type docker-php-ext-install to see available extensions
 RUN docker-php-ext-install pdo_mysql
 
