@@ -16,11 +16,15 @@
         /**
          * Method to validate fields from form
          */
-        public function test_input(int|string|float $data): int|string|float
+        public function test_input(int|string|float|null $data): int|string|float|null
         {
-            $data = htmlspecialchars($data);
-            $data = trim($data);
-            $data = stripslashes($data);
+            if(is_null($data) || ctype_space($data)) return null;            
+
+            if(!is_int($data) && !is_float($data)) {
+                $data = htmlspecialchars($data);
+                $data = trim($data);
+                $data = stripslashes($data);
+            }
     
             return $data;
         }
